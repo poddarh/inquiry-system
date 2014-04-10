@@ -1,0 +1,19 @@
+@charset "utf-8";
+/* CSS Document */
+
+.tableHeading{
+	text-align:left
+}
+.tableRow:hover{
+	background-color:#F6F6F6;
+	cursor:pointer;
+}
+.tableHeading th{
+	border-bottom:1pt solid grey;
+}
+.table{
+	background-color:#E6E6E6;
+	border:2pt solid grey;
+	border-radius:3px;
+	margin:10px;
+}

@@ -1,0 +1,21 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/context
+		  http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		  http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<!-- Injection in Action Classes Starts -->
+		<bean scope="prototype" id="controller.incharge.addInquiry" 		class="com.royaltechnosoft.inquiry.controller.incharge.inquiry.AddAction" />
+		<bean scope="prototype" id="controller.incharge.getInquiry" 		class="com.royaltechnosoft.inquiry.controller.incharge.inquiry.GetAction" />
+		
+		<bean scope="prototype" id="controller.incharge.manageCourse" 	class="com.royaltechnosoft.inquiry.controller.incharge.course.ManageAction" />
+		
+		<bean scope="prototype" id="controller.incharge.listFollowups" 	class="com.royaltechnosoft.inquiry.controller.incharge.followup.ListAction" />
+	<!-- Injection in Action Classes Ends-->
+
+</beans>
