@@ -7,14 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Id;
-import javax.persistence.Transient;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 public class DAOUtil {
 	private static Map<Class<?>, List<String>> fieldMap;
@@ -25,45 +22,23 @@ public class DAOUtil {
 		idNameMap = new HashMap<Class<?>, String>();
 	}
 	
-	public static Criteria createCriteria(Object model, Session session) {
-		Criteria criteria = session.createCriteria(model.getClass());
+	public static Query getFieldsQuery(Object model) {
+		Query query = new Query();
 		Map<String, Object> fields = getFields(model);
+		for (String key : fields.keySet())
+			query.addCriteria(Criteria.where(key).is(fields.get(key)));
+		return query;
+	}
+	
+	public static Update getFieldsUpdate(Object model) {
+		Update update = new Update();
+		Map<String, Object> fields = getFields(model);
+		if(fields.size()==0) return null;
 		for (String key : fields.keySet()){
-			criteria.add(Restrictions.eq(key, fields.get(key)));
+			if(!idNameMap.get(model.getClass()).equals(key))
+				update.set(key,fields.get(key));
 		}
-		return criteria;
-	}
-	
-	public static Criteria createCriteriaFromId(int id, Class<?> type, Session session) {
-		Criteria criteria = session.createCriteria(type);
-		criteria.add(Restrictions.eq(getIdFieldName(type),id));
-		return criteria;
-	}
-	
-	public static Object getUpdatedModel(Object oldModel, Object newModel) {
-		return getUpdatedModels(new Object[]{oldModel}, newModel).get(0);
-	}
-	
-	public static List<Object> getUpdatedModels(Object[] oldModels, Object newModel) {
-		Class<?> type = newModel.getClass();
-		if(!fieldMap.containsKey(type))
-			findFieldsAndMethods(type);
-		Map<String, Object> fields = getFields(newModel);
-		
-		List<Object> newModels = new ArrayList<Object>();
-		for (Object oldModel : oldModels) {
-			for (String key : fields.keySet()){
-				if(!idNameMap.get(newModel.getClass()).equals(key)){
-					try {
-						BeanUtils.setProperty(oldModel,key,fields.get(key));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			newModels.add(oldModel);
-		}
-		return newModels;
+		return update;
 	}
 	
 	private static Map<String, Object> getFields(Object model){
@@ -75,8 +50,8 @@ public class DAOUtil {
 		List<String> fieldNames = fieldMap.get(type);
 		for (String fieldName: fieldNames) {
 			Object value = null;
-			try { 
-				value = type.getMethod(getGetMethodName(fieldName)).invoke(model);
+			try {
+				value = type.getMethod(getMethodName(fieldName)).invoke(model);
 			} catch (Exception e) { e.printStackTrace(); }
 			if(value!=null)
 				nonNullFields.put(fieldName, value);
@@ -99,7 +74,7 @@ public class DAOUtil {
 					}
 				}
 				
-				type.getMethod(getGetMethodName(field.getName()));
+				type.getMethod(getMethodName(field.getName()));
 				
 			} catch (Exception e) { continue; }
 			fieldNames.add(field.getName());
@@ -107,7 +82,7 @@ public class DAOUtil {
 		fieldMap.put(type, fieldNames);
 	}
 	
-	private static String getGetMethodName(String fieldName){
+	private static String getMethodName(String fieldName){
 		char begin = Character.toUpperCase(fieldName.charAt(0));
 		return "get"+begin+fieldName.substring(1);
 	}
@@ -117,5 +92,5 @@ public class DAOUtil {
 			findFieldsAndMethods(type);
 		return idNameMap.get(type);
 	}
-
+	
 }

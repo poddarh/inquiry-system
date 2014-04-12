@@ -1,18 +1,30 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation="http://www.springframework.org/schema/context
 		  http://www.springframework.org/schema/context/spring-context-2.5.xsd
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-              http://www.springframework.org/schema/jdbc
-              http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
 	
 	<context:annotation-config />
 	<context:property-placeholder location="classpath:spring.properties" />
 	
+	<!-- Mongo Configuration Starts -->
+
+	<mongo:mongo host="127.0.0.1" port="27017" />
+	<mongo:db-factory dbname="inquiry" />
+	<mongo:mapping-converter id="converter" />
+
+	<bean id="mongoOperation" class="org.springframework.data.mongodb.core.MongoTemplate"
+		autowire="byName">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+
+	<!-- Mongo Configuration Ends -->
 	
-	<import resource="applicationContext/hibernate.xml" />
+	
 	<import resource="applicationContext/dao.xml" />
 	<import resource="applicationContext/util.xml" />
 	<import resource="applicationContext/service.xml" />

@@ -88,13 +88,6 @@
 			<version>1.2.17</version>
 		</dependency>
 		
-		<!-- Hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.3.4.Final</version>
-		</dependency>
-		
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -126,23 +119,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
-		<!-- MySQL Connector -->
+		<!-- Spring data mongodb -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.30</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-dbcp</artifactId>
-			<version>7.0.53</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.1</version>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.4.1.RELEASE</version>
 		</dependency>
 		
 	</dependencies>

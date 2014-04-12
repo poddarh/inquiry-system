@@ -2,19 +2,19 @@ package com.royaltechnosoft.inquiry.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import com.royaltechnosoft.inquiry.dao.DAO;
-import com.royaltechnosoft.inquiry.model.Model;
 import com.royaltechnosoft.inquiry.util.DAOUtil;
 
 public class DAOSupport<T> implements DAO<T> {
-	@Autowired private SessionFactory sessionFactory;
+	@Autowired private MongoOperations mongoOperation;
 	private Class<T> t;
 	
 	public void setGenericType(Class<T> t){
@@ -22,94 +22,69 @@ public class DAOSupport<T> implements DAO<T> {
 	}
 	
 	public List<T> find(T model) {
-		return find(model, null, (byte) 0);
+		return find(model, null, null, null);
 	}
 	
-	public List<T> find(T model, String sortColumn, byte direction) {
-		Session session = getSession();
-		Criteria criteria = DAOUtil.createCriteria((Model) model, session);
-		if(sortColumn!=null){
-			switch(direction){
-			case ASCENDING:
-				criteria.addOrder(Order.asc(sortColumn));
-				break;
-			case DESCENDING:
-				criteria.addOrder(Order.desc(sortColumn));
-				break;
-			}
-		}
-		List<T> list = criteria.list();
-		closeSession(session);
-		return list;
+	public List<T> find(T model, String sortColumn, Direction direction) {
+		return find(model, sortColumn, direction, null);
 	}
 	
 	public T findOne(T model) {
-		Session session = getSession();
-		Criteria criteria = DAOUtil.createCriteria(model, session);
-		T t = (T) criteria.uniqueResult();
-		closeSession(session);
-		return t;
+		return mongoOperation.findOne(DAOUtil.getFieldsQuery(model), t);
 	}
 	
-	public T findOne(int id) {
-		Session session = getSession();
-		Criteria criteria = DAOUtil.createCriteriaFromId(id, t, session);
-		T t = (T) criteria.uniqueResult();
-		closeSession(session);
-		return t;
+	public T findOne(String id) {
+		return mongoOperation.findById(id, t);
 	}
 	
-	public Number count(T model) {
-		Session session = getSession();
-		Number count = (Number) session.createCriteria(model.getClass()).setProjection(Projections.rowCount()).uniqueResult();
-		closeSession(session);
-		return count; 
-
+	public long count(T model) {
+		return mongoOperation.count(DAOUtil.getFieldsQuery(model), t);
+	}
+	
+	public int countPages(T model) {
+		return getPageCount(count(model));
 	}
 	
 	public void save(T model) {
-		Session session = getSession();
-        session.saveOrUpdate(model);
-        closeSession(session);
+		mongoOperation.save(model);
 	}
 	
 	public void insert(T model) {
-		Session session = getSession();
-		session.save(model);
-		closeSession(session);
+		mongoOperation.insert(model);
 	}
 	
-	public void update(int id, T updateModel) {
-		T existingModel = findOne(id);
-		
-		Session session = getSession();
-		session.saveOrUpdate(DAOUtil.getUpdatedModel(existingModel, updateModel));
-		closeSession(session);
+	public boolean update(String id, T updateModel) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where(DAOUtil.getIdFieldName(t)).is(id));
+		Update update = DAOUtil.getFieldsUpdate(updateModel);
+		if(update!=null)
+			return mongoOperation.updateFirst(query, update, t).getN()>0;
+		else
+			return true;
 	}
 	
-	public void update(T queryModel, T updateModel) {
-		List<T> existingModels = find(queryModel);
-		Session session = getSession();
-		for (Object object : DAOUtil.getUpdatedModels(existingModels.toArray(), updateModel)) {
-			session.saveOrUpdate(object);
-		}
-		closeSession(session);
+	public boolean update(T queryModel, T updateModel) {
+		Update update = DAOUtil.getFieldsUpdate(updateModel);
+		if(update!=null)
+			return mongoOperation.updateMulti(DAOUtil.getFieldsQuery(queryModel), update, t).getN()>0;
+		else
+			return true;
 	}
 	
 	public void destroy(T model) {
-		Session session = getSession();
-		session.delete(findOne(model));
-		closeSession(session);
+		mongoOperation.remove(model);
 	}
 	
 	public void destroyMany(T queryModel) {
-		Session session = getSession();
-		for (Object object : find(queryModel)) {
-			session.delete(object);
-		}
-		closeSession(session);
+		mongoOperation.remove(DAOUtil.getFieldsQuery(queryModel), t);
 	}
 
+	public MongoOperations getMongoOperation() {
+		return mongoOperation;
+	}
+	public void setMongoOperation(MongoOperations mongoOperation) {
+		this.mongoOperation = mongoOperation;
+	}
 	public Class<T> getT() {
 		return t;
 	}
@@ -117,21 +92,26 @@ public class DAOSupport<T> implements DAO<T> {
 		this.t = t;
 	}
 
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-	
-	public Session getSession(){
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		return session;
-	}
-	
-	public void closeSession(Session session){
-		if(session.getTransaction().isActive())
-			session.getTransaction().commit();
-		session.disconnect();
-		session.close();
+	public List<T> find(T model, Integer page) {
+		return find(model,null,null,page);
 	}
 
+	public List<T> find(T model, String sortColumn, Direction direction, Integer page) {
+		Query query = DAOUtil.getFieldsQuery(model);
+		if(sortColumn != null && direction != null)
+			query.with(new Sort(direction, sortColumn));
+		if(page!=null){
+			query.skip((page - 1) * LIMIT_PER_PAGE);
+			query.limit(LIMIT_PER_PAGE);
+		}
+		return mongoOperation.find(query, t);
+		
+	}
+	
+	public int getPageCount(long totalResults){
+		if (totalResults % LIMIT_PER_PAGE == 0)
+			return (int) (totalResults / LIMIT_PER_PAGE);
+		else
+			return (int) (totalResults / LIMIT_PER_PAGE) + 1;
+	}
 }

@@ -102,20 +102,22 @@
 <label for="nextScheduledDate">Call again on: </label><s:textfield name="nextScheduledDate" id="nextScheduledDate" size="10" />
 <s:submit value="Add" />
 </s:form>
-<table border="0" cellspacing="0" cellpadding="5" class="table">
-  <tr class="tableHeading">
-    <th scope="col">Date &amp; Time</th>
-    <th scope="col">Remark</th>
-    <th scope="col">Scheduled Call</th>
-  </tr>
-  <s:iterator value="inquiry.followups" var="followup">
-	  <tr>
-	    <td><s:date name="#followup.time" format="MMM dd, yyyy h:mm a" /></td>
-	    <td><s:property value="#followup.remark"/></td>
-	    <td><s:date name="#followup.nextScheduledDate" format="MMM dd, yyyy" /></td>
+<s:if test="%{inquiry.followups!=null}">
+	<table border="0" cellspacing="0" cellpadding="5" class="table">
+	  <tr class="tableHeading">
+	    <th scope="col">Date &amp; Time</th>
+	    <th scope="col">Remark</th>
+	    <th scope="col">Scheduled Call</th>
 	  </tr>
-  </s:iterator>
-</table>
+	  <s:iterator value="inquiry.followups" var="followup">
+		  <tr>
+		    <td><s:date name="#followup.time" format="MMM dd, yyyy h:mm a" /></td>
+		    <td><s:property value="#followup.remark"/></td>
+		    <td><s:date name="#followup.nextScheduledDate" format="MMM dd, yyyy" /></td>
+		  </tr>
+	  </s:iterator>
+	</table>
+</s:if>
 
 
 

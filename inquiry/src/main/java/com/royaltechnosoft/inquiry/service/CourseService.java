@@ -7,5 +7,5 @@ import com.royaltechnosoft.inquiry.model.Course;
 public interface CourseService extends Service {
 	List<Course> getCourses();
 	void addCourse(String trim);
-	void removeCourse(Integer courseID);
+	void removeCourse(String courseID);
 }

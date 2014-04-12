@@ -7,7 +7,7 @@ import com.royaltechnosoft.inquiry.service.CourseService;
 
 public class RemoveAction extends ControllerSupport {
 	@Autowired private CourseService courseService;
-	private Integer courseId;
+	private String courseId;
 	
 	public String execute() {
 		courseService.removeCourse(courseId);
@@ -15,11 +15,11 @@ public class RemoveAction extends ControllerSupport {
 		return SUCCESS;
 	}
 	
-	public Integer getCourseId() {
+	public String getCourseId() {
 		return courseId;
 	}
 	
-	public void setCourseId(Integer courseId) {
+	public void setCourseId(String courseId) {
 		this.courseId = courseId;
 	}
 }

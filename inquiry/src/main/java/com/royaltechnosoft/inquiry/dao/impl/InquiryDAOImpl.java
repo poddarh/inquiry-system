@@ -3,12 +3,9 @@ package com.royaltechnosoft.inquiry.dao.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import com.royaltechnosoft.inquiry.dao.InquiryDAO;
 import com.royaltechnosoft.inquiry.model.Inquiry;
@@ -17,71 +14,46 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 	public InquiryDAOImpl() {
 		setGenericType(Inquiry.class);
 	}
-
+	
 	public List<Inquiry> search(String name, Date newerThan, Date olderThan,
-			Integer courseID, Character status, int maxResults, int firstResult) {
-		Session session = getSession();
-		Criteria criteria = session.createCriteria(Inquiry.class);
+			Integer courseID, Character status, int page) {
+		Query query = new Query();
 		
 		if(name!=null && name.trim().length()>0)
-			criteria.add(Restrictions.like("studentName", name, MatchMode.ANYWHERE));
+			query.addCriteria(Criteria.where("studentName").regex(name));
 		if(newerThan!=null)
-			criteria.add(Restrictions.ge("date", newerThan));
+			query.addCriteria(Criteria.where("date").gte(newerThan));
 		if(olderThan!=null)
-			criteria.add(Restrictions.lt("date", olderThan));
+			query.addCriteria(Criteria.where("date").lt(olderThan));
 		if(courseID!=null)
-			criteria.add(Restrictions.eq("courseID", courseID));
+			query.addCriteria(Criteria.where("courseID").is(courseID));
 		if(status!=null)
-			criteria.add(Restrictions.eq("status", status));
+			query.addCriteria(Criteria.where("status").is(status));
 		
-		criteria.addOrder(Order.desc("date"));
-		criteria.setFirstResult(firstResult);
-		criteria.setMaxResults(maxResults);
+		query.with(new Sort(DESCENDING, "date"));
+		query.skip((page - 1) * LIMIT_PER_PAGE);
+		query.limit(LIMIT_PER_PAGE);
 		
-		@SuppressWarnings("unchecked")
-		List<Inquiry> inquiries = criteria.list();
-		
-		closeSession(session);
-		return inquiries;
+		return getMongoOperation().find(query, Inquiry.class);
+	
 	}
 	
-	public long count(String name, Date newerThan, Date olderThan,
+	public int countPages(String name, Date newerThan, Date olderThan,
 			Integer courseID, Character status) {
-		Session session = getSession();
-		Criteria criteria = session.createCriteria(Inquiry.class);
+		Query query = new Query();
 		
 		if(name!=null && name.trim().length()>0)
-			criteria.add(Restrictions.like("studentName", name, MatchMode.ANYWHERE));
+			query.addCriteria(Criteria.where("studentName").regex(name));
 		if(newerThan!=null)
-			criteria.add(Restrictions.ge("date", newerThan));
+			query.addCriteria(Criteria.where("date").gte(newerThan));
 		if(olderThan!=null)
-			criteria.add(Restrictions.lt("date", olderThan));
+			query.addCriteria(Criteria.where("date").lt(olderThan));
 		if(courseID!=null)
-			criteria.add(Restrictions.eq("courseID", courseID));
+			query.addCriteria(Criteria.where("courseID").is(courseID));
 		if(status!=null)
-			criteria.add(Restrictions.eq("status", status));
+			query.addCriteria(Criteria.where("status").is(status));
 		
-		criteria.setProjection(Projections.rowCount());
-		long count = (Long) criteria.uniqueResult();
-		
-		closeSession(session);
-		return count;
+		return getPageCount(getMongoOperation().count(query, Inquiry.class));
 	}
 
-	public List<Inquiry> search(char status, int maxResults, int firstResult) {
-		Session session = getSession();
-		Criteria criteria = session.createCriteria(Inquiry.class);
-		
-		criteria.add(Restrictions.eq("status", status));
-		
-		criteria.addOrder(Order.asc("date"));
-		criteria.setFirstResult(firstResult);
-		criteria.setMaxResults(maxResults);
-		
-		@SuppressWarnings("unchecked")
-		List<Inquiry> inquiries = criteria.list();
-		
-		closeSession(session);
-		return inquiries;
-	}
 }

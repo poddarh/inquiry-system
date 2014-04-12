@@ -7,7 +7,7 @@ import com.royaltechnosoft.inquiry.service.InquiryService;
 
 public class CloseAction extends ControllerSupport {
 	@Autowired private InquiryService inquiryService;
-	private Integer inquiryID;
+	private String inquiryID;
 	
 	public String execute() {
 		inquiryService.close(inquiryID);
@@ -15,11 +15,11 @@ public class CloseAction extends ControllerSupport {
 		return SUCCESS;
 	}
 
-	public Integer getInquiryID() {
+	public String getInquiryID() {
 		return inquiryID;
 	}
 
-	public void setInquiryID(Integer inquiryID) {
+	public void setInquiryID(String inquiryID) {
 		this.inquiryID = inquiryID;
 	}
 }

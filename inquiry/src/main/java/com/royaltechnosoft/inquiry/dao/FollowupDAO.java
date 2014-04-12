@@ -6,6 +6,6 @@ import java.util.List;
 import com.royaltechnosoft.inquiry.model.Followup;
 
 public interface FollowupDAO extends DAO<Followup> {
-	List<Followup> listScheduledBeforeTime(Date time, int maxResults, int firstResult);
-	long countScheduledBeforeTime(Date time);
+	List<Followup> listScheduledBeforeTime(Date time, int page);
+	int countPagesScheduledBeforeTime(Date time);
 }

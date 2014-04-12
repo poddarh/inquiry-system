@@ -3,64 +3,46 @@ package com.royaltechnosoft.inquiry.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.apache.struts2.json.JSONException;
 import org.apache.struts2.json.JSONUtil;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
-@Entity
-@Table(name = "inquiries")
+@Document(collection = "inquiries")
 public class Inquiry implements Model {
 	public static final char STATUS_FRESH = 'f';
 	public static final char STATUS_OPEN = 'o';
 	public static final char STATUS_CLOSED = 'c';
 	
 	@Id
-	@GeneratedValue
-	private Integer inquiryID;
-	@Column(nullable = false)
+	private String inquiryID;
+	@Indexed
 	private Date dateCreated;
-	@Column(length = 45, nullable = false)
+	@Indexed
 	private String studentName;
-	@Column(length = 11, nullable = false)
 	private String studentMobile;
-	@Column(length = 15)
 	private String studentTelephone;
-	@Column(length = 100)
 	private String studentAddress;
-	@Column(length = 45)
 	private String studentEmail;
-	@Column(length = 75, nullable = false)
 	private String institutionName;
-	@Column(length = 12, nullable = false)
 	private String studentLevel;
-	@Column(nullable = false)
-	private Integer courseID;
-	@Column(length = 75, nullable = false)
 	private String subjects;
-	@Column(nullable = false)
+	@Indexed
 	private Character status;
-	@Column(length = 30)
 	private String preferredTiming;
-	@Column(length = 45)
 	private String referredBy;
-	@Column(nullable = false)
 	private String inquiryHandledBy;
 	
-	@Transient
-	private List<Followup> followups;
-	@Transient
+	@DBRef
 	private Course course;
+	@DBRef(lazy=true)
+	List<Followup> followups;
 	
 	public List<Followup> getFollowups() {
 		return followups;
@@ -71,11 +53,11 @@ public class Inquiry implements Model {
 	}
 
 	// Setters and getters
-	public Integer getInquiryID() {
+	public String getInquiryID() {
 		return inquiryID;
 	}
 
-	public void setInquiryID(Integer inquiryID) {
+	public void setInquiryID(String inquiryID) {
 		this.inquiryID = inquiryID;
 	}
 
@@ -148,15 +130,6 @@ public class Inquiry implements Model {
 	@RequiredStringValidator(key="fieldErrors.requiredString")
 	public void setStudentLevel(String studentLevel) {
 		this.studentLevel = studentLevel;
-	}
-
-	public Integer getCourseID() {
-		return courseID;
-	}
-
-	@RequiredFieldValidator(key="fieldErrors.required")
-	public void setCourseID(Integer courseID) {
-		this.courseID = courseID;
 	}
 
 	public String getPreferredTiming() {

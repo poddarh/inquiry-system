@@ -10,7 +10,7 @@ public class GetAction extends ControllerSupport{
 	@Autowired private InquiryService inquiryService;
 	
 	private Inquiry inquiry;
-	private Integer inquiryId;
+	private String inquiryId;
 	
 	public String execute() {
 		inquiry = inquiryService.getInquiry(inquiryId);
@@ -21,11 +21,11 @@ public class GetAction extends ControllerSupport{
 	}
 	
 	// Auto generated setters and getters
-	public Integer getInquiryId() {
+	public String getInquiryId() {
 		return inquiryId;
 	}
 
-	public void setInquiryId(Integer inquiryId) {
+	public void setInquiryId(String inquiryId) {
 		this.inquiryId = inquiryId;
 	}
 

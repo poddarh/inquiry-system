@@ -1,30 +1,23 @@
 package com.royaltechnosoft.inquiry.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.apache.struts2.json.JSONException;
 import org.apache.struts2.json.JSONUtil;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "courses")
+@Document(collection = "courses")
 public class Course implements Model {
 
 	@Id
-	@GeneratedValue
-	private Integer courseId;
-	@Column(nullable = false, length = 32)
+	private String courseId;
 	private String name;
 
 	// Setters and getters
-	public Integer getCourseId() {
+	public String getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(Integer courseId) {
+	public void setCourseId(String courseId) {
 		this.courseId = courseId;
 	}
 

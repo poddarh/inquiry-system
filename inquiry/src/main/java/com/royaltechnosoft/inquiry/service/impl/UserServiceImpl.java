@@ -13,7 +13,7 @@ public class UserServiceImpl extends ServiceSupport implements UserService {
 		userDAO.save(user);
 	}
 
-	public User getUserById(Integer userId) {
+	public User getUserById(String userId) {
 		return userDAO.findOne(userId);
 	}
 

@@ -22,7 +22,7 @@ public class CourseServiceImpl extends ServiceSupport implements CourseService {
 		courseDAO.save(course);
 	}
 
-	public void removeCourse(Integer courseID) {
+	public void removeCourse(String courseID) {
 		Course course = new Course();
 		course.setCourseId(courseID);
 		courseDAO.destroy(course);
