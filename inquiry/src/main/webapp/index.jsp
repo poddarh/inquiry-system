@@ -8,6 +8,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<s:textfield name="Name" value="%{user.name}"/>
+<s:form action="Login">
+<s:actionerror/>
+<s:textfield key="username" label="Username" />
+<s:password key="password" label="Password" />
+<s:submit/>
+
+<s:property value="%{exception.message}"/>
+<br/>
+<s:property value="%{exception.stackTrace}"/>
+
+
+</s:form>
 </body>
 </html>

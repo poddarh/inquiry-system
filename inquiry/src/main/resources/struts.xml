@@ -3,87 +3,78 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
-    <constant name="struts.devMode" value="true"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="true" />
 	<constant name="struts.custom.i18n.resources" value="global" />
-	
+
 	<package name="custom-default" extends="struts-default">
-		<interceptors> 
-			<interceptor-stack name="myDefaultStack">
-                <interceptor-ref name="exception"/>
-                <interceptor-ref name="alias"/>
-                <interceptor-ref name="servletConfig"/>
-                <interceptor-ref name="i18n"/>
-                <interceptor-ref name="prepare">
-                	<param name="alwaysinvokePrepare">false</param>
-                </interceptor-ref>
-                <interceptor-ref name="chain"/>
-                <interceptor-ref name="scopedModelDriven"/>
-                <interceptor-ref name="modelDriven"/>
-                <interceptor-ref name="fileUpload"/>
-                <interceptor-ref name="checkbox"/>
-                <interceptor-ref name="multiselect"/>
-                <interceptor-ref name="staticParams"/>
-                <interceptor-ref name="actionMappingParams"/>
-                <interceptor-ref name="params">
-                    <param name="excludeParams">^dojo\..*,^struts\..*,^session\..*,^request\..*,^application\..*,^servlet(Request|Response)\..*,^parameters\..*,^action:.*,^method:.*</param>
-                </interceptor-ref>
-                <interceptor-ref name="conversionError"/>
-                <interceptor-ref name="validation">
-                    <param name="excludeMethods">input,back,cancel,browse</param>
-                </interceptor-ref>
-                <interceptor-ref name="workflow">
-                    <param name="excludeMethods">input,back,cancel,browse</param>
-                </interceptor-ref>
-                <interceptor-ref name="debugging"/>
-                <interceptor-ref name="deprecation"/>
-            </interceptor-stack>
-			
+
+		<interceptors>
 			<interceptor-stack name="messageStoreDefault">
 				<interceptor-ref name="store">
-		            <param name="operationMode">AUTOMATIC</param>
-		        </interceptor-ref>
-		        <interceptor-ref name="defaultStack"></interceptor-ref>
+					<param name="operationMode">AUTOMATIC</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		<default-interceptor-ref name="messageStoreDefault"/>
+
+		<default-interceptor-ref name="messageStoreDefault" />
+
 		<global-exception-mappings>
-			<exception-mapping exception="java.lang.Exception" result="error" />
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
 		</global-exception-mappings>
+
 	</package>
-	
-    <!-- In-charge Package -->
-    <package name="incharge" namespace="/incharge" extends="custom-default">
-		
-		<!-- Add Inquiry Class -->
-		<action name="AddInquiryForm" class="controller.incharge.addInquiry" method="make">
-			<result name="input">inquiry/add.jsp</result>
+
+	<!-- Officer Package -->
+	<package name="officer" namespace="/officer" extends="custom-default">
+
+		<global-results>
+			<result name="error">/index.jsp</result>
+		</global-results>
+
+		<!-- Inquiry -->
+		<action name="AddInquiry" class="controller.officer.addInquiry">
+			<result>add-inquiry.jsp</result>
+			<result name="input">add-inquiry.jsp</result>
 		</action>
-		<action name="AddInquiry" class="controller.incharge.addInquiry">
-			<result type="redirectAction">AddInquiryForm</result>
-			<result name="input">inquiry/add.jsp</result>
+		<action name="GetInquiry" class="controller.officer.getInquiry">
+			<result>view-inquiry.jsp</result>
+			<result name="input">view-inquiry.jsp</result>
 		</action>
-		
+		<action name="CloseInquiry" class="controller.officer.closeInquiry">
+			<result type="redirectAction">GetInquiry.action?inquiryId=${inquiryID}</result>
+		</action>
+
 		<!-- Course -->
-		<action name="ManageCourse" class="controller.incharge.manageCourse" method="make">
-			<result name="input">course/manage.jsp</result>
+		<action name="AddCourse" class="controller.officer.addCourse">
+			<result>manage-course.jsp</result>
+			<result name="input">manage-course.jsp</result>
 		</action>
-		<action name="AddCourse" class="controller.incharge.manageCourse" method="add">
-			<result type="redirectAction">ManageCourse</result>
-			<result name="input" type="redirectAction">ManageCourse</result>
+		<action name="RemoveCourse" class="controller.officer.removeCourse">
+			<result>manage-course.jsp</result>
 		</action>
-		<action name="RemoveCourse" class="controller.incharge.manageCourse" method="remove">
-			<result type="redirectAction">ManageCourse</result>
-		</action>
-		
+
 		<!-- List Follow ups -->
-		<action name="ListFollowups" class="controller.incharge.listFollowups">
+		<action name="AddFollowup" class="controller.officer.addFollowup">
+			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryID}</result>
+			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryID}</result>
+		</action>
+		<action name="ListFollowups" class="controller.officer.listFollowups">
 			<result>index.jsp</result>
 		</action>
-		
-    </package>
-    
-    <package name="default" namespace="/" extends="struts-default">
-    </package>
-    
+
+	</package>
+
+	<package name="default" namespace="/" extends="struts-default">
+		<action name="Login" class="controller.userLogin">
+			<result>officer/index.jsp</result>
+			<result name="input">index.jsp</result>
+		</action>
+		<action name="Logout" class="controller.userLogout">
+			<result>index.jsp</result>
+		</action>
+	</package>
+
 </struts>

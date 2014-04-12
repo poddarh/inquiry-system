@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.struts2.json.JSONException;
+import org.apache.struts2.json.JSONUtil;
+
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
@@ -18,7 +21,10 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 @Entity
 @Table(name = "inquiries")
 public class Inquiry implements Model {
-
+	public static final char STATUS_FRESH = 'f';
+	public static final char STATUS_OPEN = 'o';
+	public static final char STATUS_CLOSED = 'c';
+	
 	@Id
 	@GeneratedValue
 	private Integer inquiryID;
@@ -28,7 +34,7 @@ public class Inquiry implements Model {
 	private String studentName;
 	@Column(length = 11, nullable = false)
 	private String studentMobile;
-	@Column(length = 11)
+	@Column(length = 15)
 	private String studentTelephone;
 	@Column(length = 100)
 	private String studentAddress;
@@ -42,15 +48,19 @@ public class Inquiry implements Model {
 	private Integer courseID;
 	@Column(length = 75, nullable = false)
 	private String subjects;
+	@Column(nullable = false)
+	private Character status;
 	@Column(length = 30)
-	private String preferedTiming;
+	private String preferredTiming;
 	@Column(length = 45)
 	private String referredBy;
 	@Column(nullable = false)
-	private String inquiryHandeledBy;
+	private String inquiryHandledBy;
 	
 	@Transient
 	private List<Followup> followups;
+	@Transient
+	private Course course;
 	
 	public List<Followup> getFollowups() {
 		return followups;
@@ -149,12 +159,12 @@ public class Inquiry implements Model {
 		this.courseID = courseID;
 	}
 
-	public String getPreferedTiming() {
-		return preferedTiming;
+	public String getPreferredTiming() {
+		return preferredTiming;
 	}
 
-	public void setPreferedTiming(String preferedTiming) {
-		this.preferedTiming = preferedTiming;
+	public void setPreferredTiming(String preferredTiming) {
+		this.preferredTiming = preferredTiming;
 	}
 
 	public String getReferredBy() {
@@ -165,13 +175,13 @@ public class Inquiry implements Model {
 		this.referredBy = referredBy;
 	}
 
-	public String getInquiryHandeledBy() {
-		return inquiryHandeledBy;
+	public String getInquiryHandledBy() {
+		return inquiryHandledBy;
 	}
 
 	@RequiredStringValidator(key="fieldErrors.requiredString")
-	public void setInquiryHandeledBy(String inquiryHandeledBy) {
-		this.inquiryHandeledBy = inquiryHandeledBy;
+	public void setInquiryHandledBy(String inquiryHandledBy) {
+		this.inquiryHandledBy = inquiryHandledBy;
 	}
 
 	public String getSubjects() {
@@ -183,4 +193,28 @@ public class Inquiry implements Model {
 		this.subjects = subjects;
 	}
 
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public Character getStatus() {
+		return status;
+	}
+
+	public void setStatus(Character status) {
+		this.status = status;
+	}
+	
+	public String toString() {
+		try {
+			return JSONUtil.serialize(this);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return "Error serializing the object!";
+	}
 }

@@ -1,7 +1,6 @@
 package com.royaltechnosoft.inquiry.util;
 
 import java.lang.annotation.Annotation;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import java.util.Map;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -54,12 +54,11 @@ public class DAOUtil {
 		for (Object oldModel : oldModels) {
 			for (String key : fields.keySet()){
 				if(!idNameMap.get(newModel.getClass()).equals(key)){
-					for (String fieldName: fieldMap.get(type)) {
-						try {
-							type.getMethod(getSetMethodName(fieldName)).invoke(oldModel,fields.get(key));
-						} catch (Exception e) { e.printStackTrace(); }
+					try {
+						BeanUtils.setProperty(oldModel,key,fields.get(key));
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					
 				}
 			}
 			newModels.add(oldModel);
@@ -76,7 +75,7 @@ public class DAOUtil {
 		List<String> fieldNames = fieldMap.get(type);
 		for (String fieldName: fieldNames) {
 			Object value = null;
-			try {
+			try { 
 				value = type.getMethod(getGetMethodName(fieldName)).invoke(model);
 			} catch (Exception e) { e.printStackTrace(); }
 			if(value!=null)
@@ -109,11 +108,6 @@ public class DAOUtil {
 	}
 	
 	private static String getGetMethodName(String fieldName){
-		char begin = Character.toUpperCase(fieldName.charAt(0));
-		return "get"+begin+fieldName.substring(1);
-	}
-	
-	private static String getSetMethodName(String fieldName){
 		char begin = Character.toUpperCase(fieldName.charAt(0));
 		return "get"+begin+fieldName.substring(1);
 	}

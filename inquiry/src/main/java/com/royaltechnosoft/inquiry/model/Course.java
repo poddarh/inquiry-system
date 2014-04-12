@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.struts2.json.JSONException;
+import org.apache.struts2.json.JSONUtil;
+
 @Entity
 @Table(name = "courses")
 public class Course implements Model {
@@ -32,5 +35,13 @@ public class Course implements Model {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	public String toString() {
+		try {
+			return JSONUtil.serialize(this);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return "Error serializing the object!";
+	}
 }

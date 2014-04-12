@@ -16,5 +16,12 @@ public class UserServiceImpl extends ServiceSupport implements UserService {
 	public User getUserById(Integer userId) {
 		return userDAO.findOne(userId);
 	}
+
+	public User authenticate(String email, String password) {
+		User user = new User();
+		user.setEmail(email);
+		user.setPassword(password);
+		return userDAO.findOne(user);
+	}
 	
 }

@@ -21,6 +21,7 @@ public class FollowupDAOImpl extends DAOSupport<Followup> implements FollowupDAO
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(Followup.class);
 		criteria.add(Restrictions.le("nextScheduledDate", time));
+		criteria.add(Restrictions.eq("isNextPending", true));
 		criteria.addOrder(Order.desc("time"));
 		criteria.setFirstResult(firstResult);
 		criteria.setMaxResults(maxResults);

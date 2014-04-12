@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.struts2.json.JSONException;
+import org.apache.struts2.json.JSONUtil;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -26,8 +30,22 @@ public class Followup implements Model {
 	private String remark;
 	@Column(nullable = false)
 	private Date nextScheduledDate;
+	@Column(nullable = false)
+	private Boolean isNextPending;
+	
 
+	@Transient
+	private Inquiry inquiry;
+	
 	// Setters and getters
+	public Boolean getIsNextPending() {
+		return isNextPending;
+	}
+	
+	public void setIsNextPending(Boolean isNextPending) {
+		this.isNextPending = isNextPending;
+	}
+
 	public Integer getFollowupID() {
 		return followupID;
 	}
@@ -71,4 +89,20 @@ public class Followup implements Model {
 		this.nextScheduledDate = nextScheduledDate;
 	}
 
+	public Inquiry getInquiry() {
+		return inquiry;
+	}
+
+	public void setInquiry(Inquiry inquiry) {
+		this.inquiry = inquiry;
+	}
+	
+	public String toString() {
+		try {
+			return JSONUtil.serialize(this);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return "Error serializing the object!";
+	}
 }

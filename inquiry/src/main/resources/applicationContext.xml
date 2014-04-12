@@ -11,6 +11,7 @@
 	<context:annotation-config />
 	<context:property-placeholder location="classpath:spring.properties" />
 	
+	
 	<import resource="applicationContext/hibernate.xml" />
 	<import resource="applicationContext/dao.xml" />
 	<import resource="applicationContext/util.xml" />

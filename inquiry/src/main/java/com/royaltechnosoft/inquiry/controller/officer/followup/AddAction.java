@@ -1,8 +1,9 @@
-package com.royaltechnosoft.inquiry.controller.incharge.followup;
+package com.royaltechnosoft.inquiry.controller.officer.followup;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.model.Followup;
@@ -12,9 +13,10 @@ public class AddAction extends ControllerSupport implements ModelDriven<Followup
 	@Autowired
 	private FollowupService followupService;
 	private Followup followup;
-
-	public String execute() throws Exception {
-		followupService.save(followup);
+	private Character inquiryStatus;
+	
+	public String execute(){
+		followupService.add(followup,inquiryStatus);
 		return SUCCESS;
 	}
 
@@ -32,4 +34,13 @@ public class AddAction extends ControllerSupport implements ModelDriven<Followup
 		this.followup = followup;
 	}
 
+	public Character getInquiryStatus() {
+		return inquiryStatus;
+	}
+	
+	@RequiredFieldValidator
+	public void setInquiryStatus(Character inquiryStatus) {
+		this.inquiryStatus = inquiryStatus;
+	}
+	
 }

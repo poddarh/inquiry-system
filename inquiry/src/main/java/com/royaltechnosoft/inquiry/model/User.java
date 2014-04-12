@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.struts2.json.JSONException;
+import org.apache.struts2.json.JSONUtil;
+
 @Entity
 @Table(name = "users")
 public class User implements Model {
@@ -61,5 +64,14 @@ public class User implements Model {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public String toString() {
+		try {
+			return JSONUtil.serialize(this);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return "Error serializing the object!";
 	}
 }

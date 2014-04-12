@@ -1,6 +1,11 @@
 @charset "utf-8";
 /* CSS Document */
 
+.pageNo{
+	margin: 10px;
+	color: black;
+}
+
 .tableHeading{
 	text-align:left
 }
