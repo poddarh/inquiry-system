@@ -1,3 +1,4 @@
+<%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -14,9 +15,11 @@
 <s:password key="password" label="Password" />
 <s:submit/>
 
-<s:property value="%{exception.message}"/>
-<br/>
-<s:property value="%{exception.stackTrace}"/>
+<s:set name="ex" value="%{exception}" scope="page"/>
+<%
+Exception exMsg = (Exception)pageContext.getAttribute("ex");
+exMsg.printStackTrace(new PrintWriter(out));
+%>
 
 
 </s:form>

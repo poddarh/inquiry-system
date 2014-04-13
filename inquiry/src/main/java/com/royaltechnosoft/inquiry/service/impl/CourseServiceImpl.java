@@ -12,8 +12,7 @@ public class CourseServiceImpl extends ServiceSupport implements CourseService {
 	@Autowired private CourseDAO courseDAO;
 	
 	public List<Course> getCourses() {
-		// Finding all courses using an empty model ensures that all the rows are retrieved.
-		return courseDAO.find(new Course());
+		return courseDAO.find(new Course(),"name",CourseDAO.ASCENDING);
 	}
 
 	public void addCourse(String name) {

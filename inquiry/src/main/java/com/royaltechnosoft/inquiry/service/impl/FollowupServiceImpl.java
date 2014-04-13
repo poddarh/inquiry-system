@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.royaltechnosoft.inquiry.dao.CourseDAO;
 import com.royaltechnosoft.inquiry.dao.FollowupDAO;
 import com.royaltechnosoft.inquiry.dao.InquiryDAO;
 import com.royaltechnosoft.inquiry.model.Followup;
@@ -18,18 +17,13 @@ public class FollowupServiceImpl extends ServiceSupport implements
 	private FollowupDAO followupDAO;
 	@Autowired
 	private InquiryDAO inquiryDAO;
-	@Autowired
-	private CourseDAO courseDAO;
-	private final int MAX_RESULTS = 15;
 
 	public List<Followup> list(int page) {
-		int firstResult = (page - 1) * MAX_RESULTS;
-		List<Followup> followups = followupDAO.listScheduledBeforeTime(new Date(), MAX_RESULTS, firstResult);
+		List<Followup> followups = followupDAO.listScheduledBeforeTime(new Date(), page);
 		
 		// Code to retrieve the inquiry objects for the followups
 		for (Followup followup : followups) {
 			Inquiry inquiry = inquiryDAO.findOne(followup.getInquiryID());
-			inquiry.setCourse(courseDAO.findOne(inquiry.getCourseID()));
 			followup.setInquiry(inquiry);
 		}
 		
@@ -38,12 +32,7 @@ public class FollowupServiceImpl extends ServiceSupport implements
 	}
 
 	public int getTotalPageNumber() {
-		long totalResults = followupDAO.countScheduledBeforeTime(new Date());
-
-		if (totalResults % MAX_RESULTS == 0)
-			return (int) (totalResults / MAX_RESULTS);
-		else
-			return (int) (totalResults / MAX_RESULTS) + 1;
+		return followupDAO.countPageScheduledBeforeTime(new Date());
 	}
 
 	public void add(Followup followup, Character inquiryStatus) {

@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -44,12 +46,12 @@ public class Inquiry implements Model {
 	private String institutionName;
 	@Column(length = 12, nullable = false)
 	private String studentLevel;
-	@Column(nullable = false)
-	private Integer courseID;
 	@Column(length = 75, nullable = false)
 	private String subjects;
 	@Column(nullable = false)
 	private Character status;
+	@ManyToOne(optional=false)
+	private Course course;
 	@Column(length = 30)
 	private String preferredTiming;
 	@Column(length = 45)
@@ -57,10 +59,8 @@ public class Inquiry implements Model {
 	@Column(nullable = false)
 	private String inquiryHandledBy;
 	
-	@Transient
+	@OneToMany(mappedBy="inquiry")
 	private List<Followup> followups;
-	@Transient
-	private Course course;
 	
 	public List<Followup> getFollowups() {
 		return followups;
@@ -150,13 +150,18 @@ public class Inquiry implements Model {
 		this.studentLevel = studentLevel;
 	}
 
-	public Integer getCourseID() {
-		return courseID;
-	}
-
 	@RequiredFieldValidator(key="fieldErrors.required")
 	public void setCourseID(Integer courseID) {
-		this.courseID = courseID;
+		course = new Course();
+		course.setCourseId(1);
+	}
+	
+	@Transient
+	public Integer getCourseID() {
+		if(course!=null)
+			return course.getCourseId();
+		else
+			return null;
 	}
 
 	public String getPreferredTiming() {

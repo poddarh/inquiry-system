@@ -94,14 +94,16 @@
 </table>
 <br/>
 <br/>
-<h4>Add Followup Details:</h4>
-<s:form theme="simple" action="AddFollowup">
-<s:hidden name="inquiryID" value='%{inquiry.inquiryID}' />
-<s:hidden name="inquiryStatus" value='%{inquiry.status}' />
-<label for="remark">Remark: </label><s:textfield name="remark" size="50" />
-<label for="nextScheduledDate">Call again on: </label><s:textfield name="nextScheduledDate" id="nextScheduledDate" size="10" />
-<s:submit value="Add" />
-</s:form>
+<h4>Followup Details:</h4>
+<s:if test="%{inquiry.status!='c'}">
+	<s:form theme="simple" action="AddFollowup">
+	<s:hidden name="inquiryID" value='%{inquiry.inquiryID}' />
+	<s:hidden name="inquiryStatus" value='%{inquiry.status}' />
+	<label for="remark">Remark: </label><s:textfield name="remark" size="50" />
+	<label for="nextScheduledDate">Call again on: </label><s:textfield name="nextScheduledDate" id="nextScheduledDate" size="10" />
+	<s:submit value="Add" />
+	</s:form>
+</s:if>
 <table border="0" cellspacing="0" cellpadding="5" class="table">
   <tr class="tableHeading">
     <th scope="col">Date &amp; Time</th>

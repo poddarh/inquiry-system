@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -17,13 +18,11 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
 @Table(name = "followups")
-public class Followup implements Model {
+public class Followup implements Model, Comparable<Followup> {
 
 	@Id
 	@GeneratedValue
 	private Integer followupID;
-	@Column(nullable = false)
-	private Integer inquiryID;
 	@Column(nullable = false)
 	private Date time;
 	@Column(length = 200, nullable = false)
@@ -32,9 +31,7 @@ public class Followup implements Model {
 	private Date nextScheduledDate;
 	@Column(nullable = false)
 	private Boolean isNextPending;
-	
-
-	@Transient
+	@ManyToOne
 	private Inquiry inquiry;
 	
 	// Setters and getters
@@ -53,14 +50,19 @@ public class Followup implements Model {
 	public void setFollowupID(Integer followupID) {
 		this.followupID = followupID;
 	}
-
+	
+	@Transient
 	public Integer getInquiryID() {
-		return inquiryID;
+		if(inquiry!=null)
+			return inquiry.getInquiryID();
+		else
+			return null;
 	}
 	
 	@RequiredFieldValidator(key="fieldErrors.required")
 	public void setInquiryID(Integer inquiryID) {
-		this.inquiryID = inquiryID;
+		inquiry = new Inquiry();
+		inquiry.setInquiryID(inquiryID);
 	}
 
 	public Date getTime() {
@@ -104,5 +106,9 @@ public class Followup implements Model {
 			e.printStackTrace();
 		}
 		return "Error serializing the object!";
+	}
+
+	public int compareTo(Followup o) {
+		return -time.compareTo(o.getTime());
 	}
 }

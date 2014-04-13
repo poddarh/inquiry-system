@@ -22,25 +22,11 @@ public class DAOSupport<T> implements DAO<T> {
 	}
 	
 	public List<T> find(T model) {
-		return find(model, null, (byte) 0);
+		return find(model, null, null, null);
 	}
 	
-	public List<T> find(T model, String sortColumn, byte direction) {
-		Session session = getSession();
-		Criteria criteria = DAOUtil.createCriteria((Model) model, session);
-		if(sortColumn!=null){
-			switch(direction){
-			case ASCENDING:
-				criteria.addOrder(Order.asc(sortColumn));
-				break;
-			case DESCENDING:
-				criteria.addOrder(Order.desc(sortColumn));
-				break;
-			}
-		}
-		List<T> list = criteria.list();
-		closeSession(session);
-		return list;
+	public List<T> find(T model, String sortColumn, Byte direction) {
+		return find(model, sortColumn, direction, null);
 	}
 	
 	public T findOne(T model) {
@@ -130,8 +116,43 @@ public class DAOSupport<T> implements DAO<T> {
 	public void closeSession(Session session){
 		if(session.getTransaction().isActive())
 			session.getTransaction().commit();
-		session.disconnect();
 		session.close();
 	}
 
+	public List<T> find(T model, Integer page) {
+		return find(model, null, null, page);
+	}
+
+	public List<T> find(T model, String sortColumn, Byte direction, Integer page) {
+		Session session = getSession();
+		Criteria criteria = DAOUtil.createCriteria((Model) model, session);
+		if(sortColumn!=null && direction!=null){
+			switch(direction){
+			case ASCENDING:
+				criteria.addOrder(Order.asc(sortColumn));
+				break;
+			case DESCENDING:
+				criteria.addOrder(Order.desc(sortColumn));
+				break;
+			}
+		}
+		if(page!=null){
+			criteria.setFirstResult((page - 1) * LIMIT_PER_PAGE);
+			criteria.setMaxResults(LIMIT_PER_PAGE);
+		}
+		List<T> list = criteria.list();
+		closeSession(session);
+		return list;
+	}
+
+	public int countPage(T model) {
+		return getPageCount((Long) count(model));
+	}
+	
+	public int getPageCount(long totalResults){
+		if (totalResults % LIMIT_PER_PAGE == 0)
+			return (int) (totalResults / LIMIT_PER_PAGE);
+		else
+			return (int) (totalResults / LIMIT_PER_PAGE) + 1;
+	}
 }
