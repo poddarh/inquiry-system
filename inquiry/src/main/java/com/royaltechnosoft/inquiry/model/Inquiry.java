@@ -41,17 +41,14 @@ public class Inquiry implements Model {
 	
 	@DBRef
 	private Course course;
-	@DBRef(lazy=true)
-	List<Followup> followups;
 	
-	public List<Followup> getFollowups() {
-		return followups;
+	public Inquiry() {
 	}
-
-	public void setFollowups(List<Followup> followups) {
-		this.followups = followups;
+	
+	public Inquiry(String inquiryID) {
+		this.inquiryID=inquiryID;
 	}
-
+	
 	// Setters and getters
 	public String getInquiryID() {
 		return inquiryID;

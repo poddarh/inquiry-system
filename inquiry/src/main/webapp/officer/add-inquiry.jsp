@@ -21,7 +21,7 @@
 <s:textfield key="studentEmail" label="Email"/>
 <s:textfield key="institutionName" label="School/College"/>
 <s:select list="#attr.studentLevels" key="studentLevel" label="Grade/Semester"></s:select>
-<s:select list="#attr.courses" listKey="courseId" listValue="name" key="courseID" label="Course"></s:select>
+<s:select list="#attr.courses" listKey="courseId" listValue="name" key="course.courseId" label="Course"></s:select>
 <s:textfield key="subjects" label="Subjects"/>
 <s:textfield key="preferredTiming" label="Preferable Timings"/>
 <s:textfield key="referredBy" label="Referred By"/>

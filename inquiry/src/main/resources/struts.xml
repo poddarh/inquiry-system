@@ -58,8 +58,8 @@
 
 		<!-- List Follow ups -->
 		<action name="AddFollowup" class="controller.officer.addFollowup">
-			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryID}</result>
-			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryID}</result>
+			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiry.inquiryID}</result>
+			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiry.inquiryID}</result>
 		</action>
 		<action name="ListFollowups" class="controller.officer.listFollowups">
 			<result>index.jsp</result>

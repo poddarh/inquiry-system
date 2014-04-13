@@ -21,10 +21,19 @@ public class Followup implements Model {
 	private String remark;
 	@Indexed
 	private Date nextScheduledDate;
-	
-	@DBRef(lazy=true)
+	@Indexed
+	private Boolean isNextPending;
+	@DBRef
 	private Inquiry inquiry;
 
+	public Boolean getIsNextPending() {
+		return isNextPending;
+	}
+	
+	public void setIsNextPending(Boolean isNextPending) {
+		this.isNextPending = isNextPending;
+	}
+	
 	public Inquiry getInquiry() {
 		return inquiry;
 	}

@@ -35,13 +35,31 @@ public class FollowupServiceImpl extends ServiceSupport implements
 	 * 
 	*/
 	public void add(Followup followup, Character inquiryStatus) {
+		if(inquiryStatus!=Inquiry.STATUS_FRESH){
+			Followup queryModel = new Followup();
+			queryModel.setInquiry(followup.getInquiry());
+			queryModel.setIsNextPending(true);
+			
+			Followup updateModel = new Followup();
+			updateModel.setIsNextPending(false);
+			
+			followupDAO.update(queryModel, updateModel);
+		}
 		followup.setTime(new Date());
+		followup.setIsNextPending(true);
 		followupDAO.save(followup);
+		
 		if(followup.getFollowupID()!=null && inquiryStatus==Inquiry.STATUS_FRESH){
 			Inquiry updateModel = new Inquiry();
 			updateModel.setStatus(Inquiry.STATUS_OPEN);
 			inquiryDAO.update(followup.getInquiry().getInquiryID(), updateModel);
 		}
+	}
+
+	public List<Followup> getForInquiry(Inquiry inquiry) {
+		Followup followup = new Followup();
+		followup.setInquiry(inquiry);
+		return followupDAO.find(followup, "time", FollowupDAO.DESCENDING);
 	}
 	
 }

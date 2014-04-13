@@ -5,14 +5,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.royaltechnosoft.inquiry.dao.FollowupDAO;
 import com.royaltechnosoft.inquiry.dao.InquiryDAO;
+import com.royaltechnosoft.inquiry.model.Followup;
 import com.royaltechnosoft.inquiry.model.Inquiry;
+import com.royaltechnosoft.inquiry.service.FollowupService;
 import com.royaltechnosoft.inquiry.service.InquiryService;
 
 public class InquiryServiceImpl extends ServiceSupport implements
 		InquiryService {
 	@Autowired
 	private InquiryDAO inquiryDAO;
+	@Autowired
+	private FollowupDAO followupDAO;
 
 	public void saveNew(Inquiry inquiry) {
 		inquiry.setStatus(Inquiry.STATUS_FRESH);
@@ -51,6 +56,15 @@ public class InquiryServiceImpl extends ServiceSupport implements
 		Inquiry inquiry = new Inquiry();
 		inquiry.setStatus(Inquiry.STATUS_CLOSED);
 		inquiryDAO.update(inquiryID, inquiry);
+		
+		Followup queryModel = new Followup();
+		queryModel.setInquiry(new Inquiry(inquiryID));
+		queryModel.setIsNextPending(true);
+		
+		Followup updateModel = new Followup();
+		updateModel.setIsNextPending(false);
+		
+		followupDAO.update(queryModel, updateModel);
 		
 	}
 

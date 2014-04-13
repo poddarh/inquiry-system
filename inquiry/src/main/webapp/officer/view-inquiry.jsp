@@ -94,22 +94,23 @@
 </table>
 <br/>
 <br/>
-<h4>Add Followup Details:</h4>
-<s:form theme="simple" action="AddFollowup">
-<s:hidden name="inquiryID" value='%{inquiry.inquiryID}' />
-<s:hidden name="inquiryStatus" value='%{inquiry.status}' />
-<label for="remark">Remark: </label><s:textfield name="remark" size="50" />
-<label for="nextScheduledDate">Call again on: </label><s:textfield name="nextScheduledDate" id="nextScheduledDate" size="10" />
-<s:submit value="Add" />
-</s:form>
-<s:if test="%{inquiry.followups!=null}">
+<s:if test="%{inquiry.status!='c'}">
+	<h4>Add Followup Details:</h4>
+	<s:form theme="simple" action="AddFollowup">
+	<s:hidden name="inquiry.inquiryID" value='%{inquiry.inquiryID}' />
+	<s:hidden name="inquiryStatus" value='%{inquiry.status}' />
+	<label for="remark">Remark: </label><s:textfield name="remark" size="50" />
+	<label for="nextScheduledDate">Call again on: </label><s:textfield name="nextScheduledDate" id="nextScheduledDate" size="10" />
+	<s:submit value="Add" />
+	</s:form>
+</s:if>
 	<table border="0" cellspacing="0" cellpadding="5" class="table">
 	  <tr class="tableHeading">
 	    <th scope="col">Date &amp; Time</th>
 	    <th scope="col">Remark</th>
 	    <th scope="col">Scheduled Call</th>
 	  </tr>
-	  <s:iterator value="inquiry.followups" var="followup">
+	  <s:iterator value="followups" var="followup">
 		  <tr>
 		    <td><s:date name="#followup.time" format="MMM dd, yyyy h:mm a" /></td>
 		    <td><s:property value="#followup.remark"/></td>
@@ -117,7 +118,6 @@
 		  </tr>
 	  </s:iterator>
 	</table>
-</s:if>
 
 
 
