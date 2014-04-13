@@ -4,10 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.LockOptions;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -30,15 +27,15 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		if(name!=null && name.trim().length()>0)
 			criteria.add(Restrictions.like("studentName", name, MatchMode.ANYWHERE));
 		if(newerThan!=null)
-			criteria.add(Restrictions.ge("date", newerThan));
+			criteria.add(Restrictions.ge("dateCreated", newerThan));
 		if(olderThan!=null)
-			criteria.add(Restrictions.lt("date", olderThan));
+			criteria.add(Restrictions.lt("dateCreated", olderThan));
 		if(courseID!=null)
-			criteria.add(Restrictions.eq("courseID", courseID));
+			criteria.add(Restrictions.eq("course.courseId", courseID));
 		if(status!=null)
 			criteria.add(Restrictions.eq("status", status));
 		
-		criteria.addOrder(Order.desc("date"));
+		criteria.addOrder(Order.desc("dateCreated"));
 		criteria.setFirstResult((page-1)*LIMIT_PER_PAGE);
 		criteria.setMaxResults(LIMIT_PER_PAGE);
 		
@@ -57,11 +54,11 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		if(name!=null && name.trim().length()>0)
 			criteria.add(Restrictions.like("studentName", name, MatchMode.ANYWHERE));
 		if(newerThan!=null)
-			criteria.add(Restrictions.ge("date", newerThan));
+			criteria.add(Restrictions.ge("dateCreated", newerThan));
 		if(olderThan!=null)
-			criteria.add(Restrictions.lt("date", olderThan));
+			criteria.add(Restrictions.lt("dateCreated", olderThan));
 		if(courseID!=null)
-			criteria.add(Restrictions.eq("courseID", courseID));
+			criteria.add(Restrictions.eq("course.courseId", courseID));
 		if(status!=null)
 			criteria.add(Restrictions.eq("status", status));
 		

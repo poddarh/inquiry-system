@@ -11,9 +11,15 @@ public class AddAction extends ControllerSupport {
 	private String courseName;
 	
 	public String execute() {
-		courseService.addCourse(courseName.trim());
-		addActionMessage("Added Successfully!");
-		return SUCCESS;
+		if(courseService.exists(courseName.trim())){
+			addActionMessage("Already Exists!");
+			return INPUT;
+		}else{
+			courseService.addCourse(courseName.trim());
+			addActionMessage("Added Successfully!");
+			return SUCCESS;
+		}
+			
 	}
 	
 	public String getCourseName() {

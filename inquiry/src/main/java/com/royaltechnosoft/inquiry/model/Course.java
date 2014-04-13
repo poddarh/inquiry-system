@@ -44,4 +44,5 @@ public class Course implements Model {
 		}
 		return "Error serializing the object!";
 	}
+
 }

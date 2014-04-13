@@ -43,6 +43,10 @@
 			<result>view-inquiry.jsp</result>
 			<result name="input">view-inquiry.jsp</result>
 		</action>
+		<action name="SearchInquiries" class="controller.officer.searchInquiries">
+			<result>search-inquiries.jsp</result>
+			<result name="input">search-inquiries.jsp</result>
+		</action>
 		<action name="CloseInquiry" class="controller.officer.closeInquiry">
 			<result type="redirectAction">GetInquiry.action?inquiryId=${inquiryID}</result>
 		</action>
@@ -50,10 +54,10 @@
 		<!-- Course -->
 		<action name="AddCourse" class="controller.officer.addCourse">
 			<result>manage-course.jsp</result>
-			<result name="input">manage-course.jsp</result>
+			<result name="input">manage-courses.jsp</result>
 		</action>
 		<action name="RemoveCourse" class="controller.officer.removeCourse">
-			<result>manage-course.jsp</result>
+			<result>manage-courses.jsp</result>
 		</action>
 
 		<!-- List Follow ups -->

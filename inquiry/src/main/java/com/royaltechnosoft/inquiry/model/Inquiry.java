@@ -10,14 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.apache.struts2.json.JSONException;
 import org.apache.struts2.json.JSONUtil;
 
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
@@ -59,18 +57,35 @@ public class Inquiry implements Model {
 	@Column(nullable = false)
 	private String inquiryHandledBy;
 	
-	@OneToMany(mappedBy="inquiry")
+	@OneToMany(mappedBy="inquiry",orphanRemoval=true)
 	private List<Followup> followups;
 	
+	public String getStatusString(){
+		if(status!=null){
+			switch (status) {
+			case 'f':
+				return "Fresh";
+			case 'o':
+				return "Open";
+			case 'c':
+				return "Closed";
+			default:
+				return null;
+			}
+		}else{
+			return null;
+		}
+	}
+	
+	// Setters and getters
 	public List<Followup> getFollowups() {
 		return followups;
 	}
-
+	
 	public void setFollowups(List<Followup> followups) {
 		this.followups = followups;
 	}
-
-	// Setters and getters
+	
 	public Integer getInquiryID() {
 		return inquiryID;
 	}
@@ -150,20 +165,6 @@ public class Inquiry implements Model {
 		this.studentLevel = studentLevel;
 	}
 
-	@RequiredFieldValidator(key="fieldErrors.required")
-	public void setCourseID(Integer courseID) {
-		course = new Course();
-		course.setCourseId(1);
-	}
-	
-	@Transient
-	public Integer getCourseID() {
-		if(course!=null)
-			return course.getCourseId();
-		else
-			return null;
-	}
-
 	public String getPreferredTiming() {
 		return preferredTiming;
 	}
@@ -201,7 +202,7 @@ public class Inquiry implements Model {
 	public Course getCourse() {
 		return course;
 	}
-
+	
 	public void setCourse(Course course) {
 		this.course = course;
 	}

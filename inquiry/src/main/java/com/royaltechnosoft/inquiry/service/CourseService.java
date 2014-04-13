@@ -6,6 +6,7 @@ import com.royaltechnosoft.inquiry.model.Course;
 
 public interface CourseService extends Service {
 	List<Course> getCourses();
-	void addCourse(String trim);
+	boolean exists(String name);
+	void addCourse(String name);
 	void removeCourse(Integer courseID);
 }

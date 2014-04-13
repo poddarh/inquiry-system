@@ -16,7 +16,7 @@ function openInquiry(inquiryId){
 	<s:actionmessage />
 </s:if>
 
-<h3>Following up required</h3>
+<h3 style="padding-left: 0">Following up required</h3>
 <s:if test="totalPages>0">
 	<div class="pageNo">
 		Page <s:iterator begin="1" end="totalPages" status="status">

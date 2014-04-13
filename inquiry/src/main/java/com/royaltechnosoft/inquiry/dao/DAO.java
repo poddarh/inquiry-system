@@ -13,7 +13,7 @@ public interface DAO<T> {
 	List<T> find(T model, String sortColumn, Byte direction, Integer page);
 	T findOne(T model);
 	T findOne(int id);
-	Number count(T model);
+	long count(T model);
 	int countPage(T model);
 	void insert(T model);
 	void save(T model);

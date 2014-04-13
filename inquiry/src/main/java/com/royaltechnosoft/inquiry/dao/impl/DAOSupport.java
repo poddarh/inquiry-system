@@ -45,11 +45,11 @@ public class DAOSupport<T> implements DAO<T> {
 		return t;
 	}
 	
-	public Number count(T model) {
+	public long count(T model) {
 		Session session = getSession();
 		Number count = (Number) session.createCriteria(model.getClass()).setProjection(Projections.rowCount()).uniqueResult();
 		closeSession(session);
-		return count; 
+		return (Long) count; 
 
 	}
 	
@@ -146,7 +146,7 @@ public class DAOSupport<T> implements DAO<T> {
 	}
 
 	public int countPage(T model) {
-		return getPageCount((Long) count(model));
+		return getPageCount(count(model));
 	}
 	
 	public int getPageCount(long totalResults){

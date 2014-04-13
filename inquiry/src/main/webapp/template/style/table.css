@@ -2,7 +2,6 @@
 /* CSS Document */
 
 .pageNo{
-	margin: 10px;
 	color: black;
 }
 
@@ -20,5 +19,4 @@
 	background-color:#E6E6E6;
 	border:2pt solid grey;
 	border-radius:3px;
-	margin:10px;
 }
