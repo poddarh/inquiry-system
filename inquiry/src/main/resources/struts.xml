@@ -47,6 +47,9 @@
 			<result>search-inquiries.jsp</result>
 			<result name="input">search-inquiries.jsp</result>
 		</action>
+		<action name="ListFreshInquiries" class="controller.officer.listFreshInquiries">
+			<result>list-fresh-inquiries.jsp</result>
+		</action>
 		<action name="CloseInquiry" class="controller.officer.closeInquiry">
 			<result type="redirectAction">GetInquiry.action?inquiryId=${inquiryID}</result>
 		</action>

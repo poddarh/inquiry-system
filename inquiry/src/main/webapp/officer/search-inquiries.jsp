@@ -50,39 +50,39 @@
 
 <h3>Find an Inquiry</h3>
 <s:form action="SearchInquiries" theme="simple" cssStyle="display:none;" id="openPageForm">
-<s:hidden key="page"/>
-<s:hidden key="name"/>
-<s:hidden key="newerThan"/>
-<s:hidden key="olderThan"/>
-<s:hidden key="courseID"/>
-<s:hidden key="status"/>
+<s:hidden name="page"/>
+<s:hidden name="name"/>
+<s:hidden name="newerThan"/>
+<s:hidden name="olderThan"/>
+<s:hidden name="courseID"/>
+<s:hidden name="status"/>
 </s:form>
 <s:form action="SearchInquiries" theme="simple" id="searchInquiryForm" >
     <table border="0" cellspacing="0" cellpadding="6">
       <tr>
         <td class="formLabel">Name</td>
-        <td><s:textfield key="name" label="Name"/></td>
+        <td><s:textfield name="name"/></td>
       </tr>
       <tr>
         <td class="formLabel">Newer than</td>
-        <td><s:textfield key="newerThan" /></td>
+        <td><s:textfield name="newerThan" /></td>
       </tr>
       <tr>
         <td class="formLabel">Older than</td>
-        <td><s:textfield key="olderThan"/></td>
+        <td><s:textfield name="olderThan"/></td>
       </tr>
       <tr>
         <td class="formLabel">Course</td>
-        <td><s:select list="#attr.courses" listKey="courseId" listValue="name" key="courseID" emptyOption="true" /></td>
+        <td><s:select list="#attr.courses" listKey="courseId" listValue="name" name="courseID" emptyOption="true" /></td>
       </tr>
       <tr>
         <td class="formLabel">Status</td>
-        <td><s:select list="#{'f':'Fresh','fo':'Open','c':'Closed'}" key="status" emptyOption="true" /></td>
+        <td><s:select list="#{'f':'Fresh','fo':'Open','c':'Closed'}" name="status" emptyOption="true" /></td>
       </tr>
       <tr>
         <td class="formLabel">&nbsp;</td>
-        <td><s:submit label="Search"/>
-          <input type="reset" name="resetButton" id="resetButton" value="Reset" /></td>
+        <td><s:submit value="Search"/>
+          <s:reset/></td>
       </tr>
 	</table>
 </s:form>
@@ -112,7 +112,7 @@
 	  <tr class="tableRow" onclick="openInquiry(<s:property value='#inquiry.inquiryID'/>)">
 	    <td><s:property value="#inquiry.studentName"/></td>
 	    <td><s:property value="#inquiry.course.name"/></td>
-	    <td><s:property value="#inquiry.dateCreated"/></td>
+	    <td><s:date name="#inquiry.dateCreated" format="MMM dd, yyyy"/></td>
 	    <td><s:property value="#inquiry.statusString"/></td>
 	  </tr>
   </s:iterator>

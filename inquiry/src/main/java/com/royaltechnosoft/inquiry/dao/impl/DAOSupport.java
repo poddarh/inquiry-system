@@ -47,7 +47,9 @@ public class DAOSupport<T> implements DAO<T> {
 	
 	public long count(T model) {
 		Session session = getSession();
-		Number count = (Number) session.createCriteria(model.getClass()).setProjection(Projections.rowCount()).uniqueResult();
+		Criteria criteria = DAOUtil.createCriteria(model, session);
+		criteria.setProjection(Projections.rowCount());
+		Number count = (Number) criteria.uniqueResult();
 		closeSession(session);
 		return (Long) count; 
 

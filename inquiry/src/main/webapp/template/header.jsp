@@ -29,12 +29,13 @@
 			<ul class="nav">
 				<li><a href="ListFollowups.action">Home</a></li>
 				<li><a href="#">Inquiry</a></li>
-				<li><a href="SearchInquiries.action">&nbsp;-&gt;Search</a></li>
-				<li><a href="add-inquiry.jsp">&nbsp;-&gt;Create New</a></li>
+				<li><a href="add-inquiry.jsp">-&gt;Create New</a></li>
+				<li><a href="ListFreshInquiries.action">-&gt;List Fresh</a></li>
+				<li><a href="SearchInquiries.action">-&gt;Search</a></li>
 				<li><a href="manage-courses.jsp">Manage Courses</a></li>
 				<li><a href="#">Account</a></li>
-				<li><a href=".action">&nbsp;-&gt;Change Password</a></li>
-				<li><a href=".action">&nbsp;-&gt;Logout</a></li>
+				<li><a href=".action">-&gt;Change Password</a></li>
+				<li><a href=".action">-&gt;Logout</a></li>
 			</ul>
 
 		</div>

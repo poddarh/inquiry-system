@@ -45,7 +45,7 @@ public class InquiryServiceImpl extends ServiceSupport implements
 	public List<Inquiry> listFresh(int page) {
 		Inquiry inquiry = new Inquiry();
 		inquiry.setStatus(Inquiry.STATUS_FRESH);
-		return inquiryDAO.find(inquiry, "date", InquiryDAO.ASCENDING, page);
+		return inquiryDAO.find(inquiry, "dateCreated", InquiryDAO.ASCENDING, page);
 	}
 
 	public int getFreshPages() {

@@ -82,6 +82,7 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		Session session = getSession();
 		Criteria criteria = DAOUtil.createCriteriaFromId(inquiryID, Inquiry.class, session);
 		Inquiry inquiry =  (Inquiry) criteria.uniqueResult();
+		System.out.println(inquiry);
 		inquiry.getFollowups().size();
 		closeSession(session);
 		return inquiry;

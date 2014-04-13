@@ -48,7 +48,7 @@
     </tr>
     <tr>
         <td style="text-align:right">Telephone:</td>
-        <td><s:property value="inquiry.studentTelephone"/>0</td>
+        <td><s:property value="inquiry.studentTelephone"/></td>
     </tr>
     <tr valign="top">
         <td style="text-align:right">Address:</td>
