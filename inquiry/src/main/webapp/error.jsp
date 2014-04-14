@@ -9,12 +9,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-<s:actionerror/>
-<s:actionmessage/>
 <s:form action="Login">
-<s:textfield key="email" label="Email" />
+<s:actionerror/>
+<s:textfield key="username" label="Username" />
 <s:password key="password" label="Password" />
 <s:submit/>
+
+<s:set name="ex" value="%{exception}" scope="page"/>
+<%
+Exception exMsg = (Exception)pageContext.getAttribute("ex");
+exMsg.printStackTrace(new PrintWriter(out));
+%>
+
 
 </s:form>
 </body>

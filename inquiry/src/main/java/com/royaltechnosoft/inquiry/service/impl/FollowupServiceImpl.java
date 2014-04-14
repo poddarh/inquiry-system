@@ -27,7 +27,6 @@ public class FollowupServiceImpl extends ServiceSupport implements
 			followup.setInquiry(inquiry);
 		}
 		
-		System.out.println(followups);
 		return followups;
 	}
 

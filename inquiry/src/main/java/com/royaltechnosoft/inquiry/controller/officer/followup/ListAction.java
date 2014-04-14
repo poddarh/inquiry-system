@@ -19,7 +19,6 @@ public class ListAction extends ControllerSupport {
 		page = page==0 ? 1 : page;
 		followups = followupService.list(page);
 		totalPages = followupService.getTotalPageNumber();
-		System.out.println(followups);
 		return SUCCESS;
 	}
 

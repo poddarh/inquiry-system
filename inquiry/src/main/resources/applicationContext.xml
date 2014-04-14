@@ -16,6 +16,7 @@
 	<import resource="applicationContext/dao.xml" />
 	<import resource="applicationContext/util.xml" />
 	<import resource="applicationContext/service.xml" />
+	<import resource="applicationContext/interceptor.xml" />
 	<import resource="applicationContext/action.xml" />
 	
 </beans>

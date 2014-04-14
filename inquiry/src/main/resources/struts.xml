@@ -8,18 +8,24 @@
 	<constant name="struts.custom.i18n.resources" value="global" />
 
 	<package name="custom-default" extends="struts-default">
-
 		<interceptors>
+			<interceptor name="authorize" class="interceptor.authorise"></interceptor>
 			<interceptor-stack name="messageStoreDefault">
 				<interceptor-ref name="store">
 					<param name="operationMode">AUTOMATIC</param>
 				</interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="authorize"/>
 			</interceptor-stack>
 		</interceptors>
 
 		<default-interceptor-ref name="messageStoreDefault" />
-
+		
+		<global-results>
+			<result name="login" type="redirect">/index.jsp</result>
+			<result name="error">/error.jsp</result>
+		</global-results>
+		
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception"
 				result="error" />
@@ -29,11 +35,11 @@
 
 	<!-- Officer Package -->
 	<package name="officer" namespace="/officer" extends="custom-default">
-
-		<global-results>
-			<result name="error">/index.jsp</result>
-		</global-results>
-
+		
+		<action name="Index">
+			<result type="redirectAction">ListFollowups</result>
+		</action>
+		
 		<!-- Inquiry -->
 		<action name="AddInquiry" class="controller.officer.addInquiry">
 			<result>add-inquiry.jsp</result>
@@ -69,14 +75,14 @@
 			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryID}</result>
 		</action>
 		<action name="ListFollowups" class="controller.officer.listFollowups">
-			<result>index.jsp</result>
+			<result>list-followups.jsp</result>
 		</action>
 
 	</package>
 
 	<package name="default" namespace="/" extends="struts-default">
 		<action name="Login" class="controller.userLogin">
-			<result>officer/index.jsp</result>
+			<result type="redirectAction">${user.role}/Index</result>
 			<result name="input">index.jsp</result>
 		</action>
 		<action name="Logout" class="controller.userLogout">
