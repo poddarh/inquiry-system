@@ -5,20 +5,20 @@ import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.opensymphony.xwork2.ModelDriven;
-import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.model.User;
 import com.royaltechnosoft.inquiry.service.UserService;
 
-public class LoginAction extends ControllerSupport implements SessionAware,ModelDriven<User> {
+public class LoginAction extends ControllerSupport implements SessionAware {
 	@Autowired private UserService userService;
-	private User user;
 	private Map<String, Object> session;
+	private String email;
+	private String password;
 	
 	public String execute() {
-//		if(user!=null)
-			user = userService.authenticate(user.getEmail(),user.getPassword());
+		User user = userService.authenticate(email,password);
 		if(user==null){
 			addActionError("Incorrect email or password!");
 			return INPUT;
@@ -32,16 +32,27 @@ public class LoginAction extends ControllerSupport implements SessionAware,Model
 		this.session = session;
 	}
 
-	public User getUser() {
-		return user;
+	public String getEmail() {
+		return email;
 	}
 
-	@VisitorFieldValidator(appendPrefix=false)
-	public void setUser(User user) {
-		this.user = user;
+	public Map<String, Object> getSession() {
+		return session;
+	}
+
+	@RequiredStringValidator(key = "fieldErrors.requiredString")
+	@EmailValidator(key = "fieldErrors.email")
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	@RequiredStringValidator(key = "fieldErrors.requiredString")
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
-	public User getModel() {
-		return user = new User();
-	}
 }

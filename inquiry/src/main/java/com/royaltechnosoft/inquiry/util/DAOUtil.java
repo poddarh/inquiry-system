@@ -78,7 +78,14 @@ public class DAOUtil {
 			try { 
 				value = type.getMethod(getGetMethodName(fieldName)).invoke(model);
 			} catch (Exception e) { e.printStackTrace(); }
-			if(value!=null)
+			if(value instanceof String)
+			{
+				if(!((String) value).trim().equals(""))
+				{
+					nonNullFields.put(fieldName, value);
+				}
+			}
+			else if(value!=null)
 				nonNullFields.put(fieldName, value);
 		}
 		return nonNullFields;

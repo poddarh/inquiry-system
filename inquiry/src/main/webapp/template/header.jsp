@@ -34,7 +34,7 @@
 				<li><a href="SearchInquiries.action">-&gt;Search</a></li>
 				<li><a href="manage-courses.jsp">Manage Courses</a></li>
 				<li><a href="#">Account</a></li>
-				<li><a href=".action">-&gt;Change Password</a></li>
+				<li><a href="account.jsp">-&gt;Change Password</a></li>
 				<li><a href="../Logout.action">-&gt;Logout</a></li>
 			</ul>
 		</div>

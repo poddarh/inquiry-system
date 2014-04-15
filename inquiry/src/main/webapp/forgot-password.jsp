@@ -11,11 +11,10 @@
 <body>
 <s:actionerror/>
 <s:actionmessage/>
-<s:form action="Login">
+<s:form action="ForgotPassword">
 <s:textfield key="email" label="Email" />
-<s:password key="password" label="Password" />
 <s:submit/>
-<s:a href="forgot-password.jsp">Forgot Password?</s:a>
+
 </s:form>
 </body>
 </html>

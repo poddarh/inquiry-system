@@ -24,6 +24,9 @@
 		
 		<bean scope="prototype" id="controller.userLogin" 	class="com.royaltechnosoft.inquiry.controller.user.LoginAction" />
 		<bean scope="prototype" id="controller.userLogout" 	class="com.royaltechnosoft.inquiry.controller.user.LogoutAction" />
+		<bean scope="prototype" id="controller.forgotPassword" 	class="com.royaltechnosoft.inquiry.controller.user.ForgotPasswordAction" />
+		<bean scope="prototype" id="controller.resetPassword" 	class="com.royaltechnosoft.inquiry.controller.user.ResetPasswordAction" />
+		<bean scope="prototype" id="controller.updateUser" 	class="com.royaltechnosoft.inquiry.controller.user.UpdateAction" />
 	<!-- Injection in Action Classes Ends-->
 
 </beans>

@@ -77,13 +77,26 @@
 		<action name="ListFollowups" class="controller.officer.listFollowups">
 			<result>list-followups.jsp</result>
 		</action>
+		
+		<!-- User -->
+		<action name="UpdateUser" class="controller.updateUser">
+			<result>account.jsp</result>
+			<result name="input">account.jsp</result>
+		</action>
 
 	</package>
 
 	<package name="default" namespace="/" extends="struts-default">
 		<action name="Login" class="controller.userLogin">
-			<result type="redirectAction">${user.role}/Index</result>
+			<result type="redirectAction">${session.user.role}/Index</result>
 			<result name="input">index.jsp</result>
+		</action>
+		<action name="ForgotPassword" class="controller.forgotPassword">
+			<result>index.jsp</result>
+			<result name="input">forgot-password.jsp</result>
+		</action>
+		<action name="ResetPassword" class="controller.resetPassword">
+			<result>index.jsp</result>
 		</action>
 		<action name="Logout" class="controller.userLogout">
 			<result>index.jsp</result>

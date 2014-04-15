@@ -157,4 +157,10 @@ public class DAOSupport<T> implements DAO<T> {
 		else
 			return (int) (totalResults / LIMIT_PER_PAGE) + 1;
 	}
+
+	public void destroy(int id) {
+		Session session = getSession();
+		session.delete(findOne(id));
+		closeSession(session);
+	}
 }

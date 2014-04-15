@@ -20,5 +20,6 @@ public interface DAO<T> {
 	void update(int id, T updateModel);
 	void update(T queryModel, T updateModel);
 	void destroy(T model);
+	void destroy(int id);
 	void destroyMany(T queryModel);
 }
