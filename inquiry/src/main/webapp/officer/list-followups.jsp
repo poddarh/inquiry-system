@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<s:include value="../template/header.jsp">
+<s:include value="/template/header.jsp">
 	<s:param name="title">Homepage</s:param>
 </s:include>
 
@@ -54,4 +54,4 @@ function openInquiry(inquiryId){
 No following up required!
 </s:else>
 
-<s:include value="../template/footer.jsp" />
+<s:include value="/template/footer.jsp" />

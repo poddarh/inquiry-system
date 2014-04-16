@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="populate" uri="/populate" %>
-<s:include value="../template/header.jsp">
+<s:include value="/template/header.jsp">
 	<s:param name="title">Homepage</s:param>
 </s:include>
 
@@ -37,4 +37,4 @@
 
 
 
-<s:include value="../template/footer.jsp" />
+<s:include value="/template/footer.jsp" />

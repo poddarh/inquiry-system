@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="populate" uri="/populate"%>
-<s:include value="../template/header.jsp">
+<s:include value="/template/header.jsp">
 	<s:param name="title" value="#inquiry.student.name"/>
 </s:include>
 
@@ -53,4 +53,4 @@ No results found!
 
 
 
-<s:include value="../template/footer.jsp" />
+<s:include value="/template/footer.jsp" />

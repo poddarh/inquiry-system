@@ -25,17 +25,29 @@
 				style="background-color: #C6D580; display: block;" /></a>
 			<!-- end .header -->
 		</div>
-		<div class="sidebar1">
-			<ul class="nav">
-				<li><a href="ListFollowups.action">Scheduled Followups</a></li>
-				<li><a href="#">Inquiry</a></li>
-				<li><a href="add-inquiry.jsp">-&gt;Create New</a></li>
-				<li><a href="ListFreshInquiries.action">-&gt;List Fresh</a></li>
-				<li><a href="SearchInquiries.action">-&gt;Search</a></li>
-				<li><a href="manage-courses.jsp">Manage Courses</a></li>
-				<li><a href="#">Account</a></li>
-				<li><a href="account.jsp">-&gt;Change Password</a></li>
-				<li><a href="../Logout.action">-&gt;Logout</a></li>
-			</ul>
-		</div>
+		<s:if test="%{#session.user!=null}">
+			<div class="sidebar1">
+				<ul class="nav">
+					<li><a href="ListFollowups.action">Scheduled Followups</a></li>
+					<li><a href="#">Inquiry</a></li>
+					<li><a href="add-inquiry.jsp">-&gt;Create New</a></li>
+					<li><a href="ListFreshInquiries.action">-&gt;List Fresh</a></li>
+					<li><a href="SearchInquiries.action">-&gt;Search</a></li>
+					<li><a href="manage-courses.jsp">Manage Courses</a></li>
+					<li><a href="account.jsp">Account</a></li>
+					<li><a href="../Logout.action">Logout</a></li>
+				</ul>
+			</div>
+		</s:if>
+		<s:else>
+			<style>
+			.content{
+				width: auto;
+				display:table;
+				float:none;
+				margin: 0 auto;
+			}
+			</style>
+		</s:else>
 		<div class="content">
+

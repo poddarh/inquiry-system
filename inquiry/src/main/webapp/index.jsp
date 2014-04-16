@@ -2,20 +2,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<s:include value="/template/header.jsp">
+	<s:param name="title">Login</s:param>
+</s:include>
+
+<h3>Login</h3>
 <s:actionerror/>
 <s:actionmessage/>
 <s:form action="Login">
 <s:textfield key="email" label="Email" />
 <s:password key="password" label="Password" />
 <s:submit/>
-<s:a href="forgot-password.jsp">Forgot Password?</s:a>
 </s:form>
-</body>
-</html>
+<s:a href="forgot-password.jsp">Forgot Password?</s:a>
+<s:include value="/template/footer.jsp"/>

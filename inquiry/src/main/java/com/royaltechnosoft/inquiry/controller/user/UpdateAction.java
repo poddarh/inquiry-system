@@ -16,14 +16,25 @@ public class UpdateAction extends ControllerSupport implements SessionAware, Mod
 	private Map<String, Object> session;
 	private User modifiedUser;
 	private String confirmPassword;
+	private String currentPassword;
 	
 	public void validate() {
 		String password = null;
 		if(modifiedUser!=null)
 			password=modifiedUser.getPassword();
+		if(confirmPassword!=null || password!=null){
+			if(currentPassword!=null && currentPassword.trim().length()!=0){
+				if(!currentPassword.equals(((User)session.get("user")).getPassword())){
+					addFieldError("currentPassword", "Incorrect current password");
+				}
+			}else
+				addFieldError("currentPassword", "Incorrect current password");
+		}else if(currentPassword!=null){
+			addFieldError("password", "Please enter new password");
+		}
 		if(confirmPassword!=null && password!=null){
 			if(!confirmPassword.equals(password)){
-				addFieldError(password, "Password and confirm password do not match");
+				addFieldError("password", "Password and confirm password do not match");
 			}
 		}
 		
@@ -61,6 +72,14 @@ public class UpdateAction extends ControllerSupport implements SessionAware, Mod
 	@VisitorFieldValidator(appendPrefix=false)
 	public void setModifiedUser(User modifiedUser) {
 		this.modifiedUser = modifiedUser;
+	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
 	}
 	
 }

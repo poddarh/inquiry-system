@@ -11,21 +11,21 @@
 		<interceptors>
 			<interceptor name="authorize" class="interceptor.authorise"></interceptor>
 			<interceptor-stack name="messageStoreDefault">
+				<interceptor-ref name="authorize" />
 				<interceptor-ref name="store">
 					<param name="operationMode">AUTOMATIC</param>
 				</interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
-				<interceptor-ref name="authorize"/>
 			</interceptor-stack>
 		</interceptors>
 
 		<default-interceptor-ref name="messageStoreDefault" />
-		
+
 		<global-results>
 			<result name="login" type="redirect">/index.jsp</result>
 			<result name="error">/error.jsp</result>
 		</global-results>
-		
+
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception"
 				result="error" />
@@ -35,11 +35,11 @@
 
 	<!-- Officer Package -->
 	<package name="officer" namespace="/officer" extends="custom-default">
-		
+
 		<action name="Index">
 			<result type="redirectAction">ListFollowups</result>
 		</action>
-		
+
 		<!-- Inquiry -->
 		<action name="AddInquiry" class="controller.officer.addInquiry">
 			<result>add-inquiry.jsp</result>
@@ -71,13 +71,15 @@
 
 		<!-- List Follow ups -->
 		<action name="AddFollowup" class="controller.officer.addFollowup">
-			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}</result>
-			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}</result>
+			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}
+			</result>
+			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}
+			</result>
 		</action>
 		<action name="ListFollowups" class="controller.officer.listFollowups">
 			<result>list-followups.jsp</result>
 		</action>
-		
+
 		<!-- User -->
 		<action name="UpdateUser" class="controller.updateUser">
 			<result>account.jsp</result>
@@ -87,6 +89,14 @@
 	</package>
 
 	<package name="default" namespace="/" extends="struts-default">
+		<global-results>
+			<result name="login" type="redirect">/index.jsp</result>
+			<result name="error">/error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+		</global-exception-mappings>
 		<action name="Login" class="controller.userLogin">
 			<result type="redirectAction">${session.user.role}/Index</result>
 			<result name="input">index.jsp</result>
