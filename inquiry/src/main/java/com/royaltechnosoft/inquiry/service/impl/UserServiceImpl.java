@@ -5,9 +5,9 @@ import java.util.Date;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.royaltechnosoft.inquiry.dao.PasswordRequestDAO;
+import com.royaltechnosoft.inquiry.dao.PasswordResetRequestDAO;
 import com.royaltechnosoft.inquiry.dao.UserDAO;
-import com.royaltechnosoft.inquiry.model.PasswordRequest;
+import com.royaltechnosoft.inquiry.model.PasswordResetRequest;
 import com.royaltechnosoft.inquiry.model.User;
 import com.royaltechnosoft.inquiry.service.UserService;
 import com.royaltechnosoft.inquiry.util.EmailUtil;
@@ -17,7 +17,7 @@ public class UserServiceImpl extends ServiceSupport implements UserService {
 	@Autowired
 	private UserDAO userDAO;
 	@Autowired
-	private PasswordRequestDAO passwordRequestDAO;
+	private PasswordResetRequestDAO passwordRequestDAO;
 
 	public void addNewUser(User user) {
 		userDAO.save(user);
@@ -38,7 +38,7 @@ public class UserServiceImpl extends ServiceSupport implements UserService {
 		User user = new User();
 		user.setEmail(email);
 		if (userDAO.count(user) == 1) {
-			PasswordRequest passwordRequest = new PasswordRequest();
+			PasswordResetRequest passwordRequest = new PasswordResetRequest();
 			passwordRequest.setEmail(email);
 			passwordRequest.setTimeCreated(new Date());
 			passwordRequest.setToken(StringUtil.generateRandomString(32));
@@ -52,7 +52,7 @@ public class UserServiceImpl extends ServiceSupport implements UserService {
 			return false;
 	}
 
-	public boolean resetPassword(PasswordRequest passwordRequest) {
+	public boolean resetPassword(PasswordResetRequest passwordRequest) {
 		passwordRequest = passwordRequestDAO.findOne(passwordRequest);
 		if (passwordRequest == null) {
 			return false;

@@ -14,7 +14,7 @@
 		<bean id="courseDAO" class="com.royaltechnosoft.inquiry.dao.impl.CourseDAOImpl" autowire="byName"/>
 		<bean id="inquiryDAO" class="com.royaltechnosoft.inquiry.dao.impl.InquiryDAOImpl" autowire="byName"/>
 		<bean id="followupDAO" class="com.royaltechnosoft.inquiry.dao.impl.FollowupDAOImpl" autowire="byName"/>
-		<bean id="passwordRequestDAO" class="com.royaltechnosoft.inquiry.dao.impl.PasswordRequestDAOImpl" autowire="byName"/>
+		<bean id="passwordRequestDAO" class="com.royaltechnosoft.inquiry.dao.impl.PasswordResetRequestDAOImpl" autowire="byName"/>
 	<!-- DAO Bean Ends -->
 	
 </beans>
