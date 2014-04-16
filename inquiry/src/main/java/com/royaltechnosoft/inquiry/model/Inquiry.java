@@ -3,19 +3,19 @@ package com.royaltechnosoft.inquiry.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.struts2.json.JSONException;
 import org.apache.struts2.json.JSONUtil;
 
-import com.opensymphony.xwork2.validator.annotations.EmailValidator;
-import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
@@ -30,20 +30,8 @@ public class Inquiry implements Model {
 	private Integer inquiryID;
 	@Column(nullable = false)
 	private Date dateCreated;
-	@Column(length = 45, nullable = false)
-	private String studentName;
-	@Column(length = 11, nullable = false)
-	private String studentMobile;
-	@Column(length = 15)
-	private String studentTelephone;
-	@Column(length = 100)
-	private String studentAddress;
-	@Column(length = 45)
-	private String studentEmail;
-	@Column(length = 75, nullable = false)
-	private String institutionName;
-	@Column(length = 12, nullable = false)
-	private String studentLevel;
+	@OneToOne(orphanRemoval=true,optional=false,cascade={CascadeType.ALL})
+	private Student student;
 	@Column(length = 75, nullable = false)
 	private String subjects;
 	@Column(nullable = false)
@@ -100,69 +88,6 @@ public class Inquiry implements Model {
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
-	}
-
-	public String getStudentName() {
-		return studentName;
-	}
-
-	@RequiredStringValidator(key="fieldErrors.requiredString")
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
-	}
-
-	public String getStudentMobile() {
-		return studentMobile;
-	}
-
-	@RequiredStringValidator(key="fieldErrors.requiredString")
-	@RegexFieldValidator(trim=true,regex="^\\d{10}$",message="Student's Mobile can only be in digits. Please enter non-0, 10 digit mobile number.")
-	public void setStudentMobile(String studentMobile) {
-		this.studentMobile = studentMobile;
-	}
-	
-	public String getStudentTelephone() {
-		return studentTelephone;
-	}
-
-	@RegexFieldValidator(trim=true,regex="^(\\d{3}[- ]?\\d{8}$|\\d{4}[- ]?\\d{7}|\\d{5}[- ]?\\d{6}|[1-9]\\d{7})$",message="Please enter a valid Student's Telephone")
-	public void setStudentTelephone(String studentTelephone) {
-		this.studentTelephone = studentTelephone;
-	}
-
-	public String getStudentAddress() {
-		return studentAddress;
-	}
-	
-	public void setStudentAddress(String studentAddress) {
-		this.studentAddress = studentAddress;
-	}
-	
-	public String getStudentEmail() {
-		return studentEmail;
-	}
-	
-	@EmailValidator(key="fieldErrors.email")
-	public void setStudentEmail(String studentEmail) {
-		this.studentEmail = studentEmail;
-	}
-
-	public String getInstitutionName() {
-		return institutionName;
-	}
-	
-	@RequiredStringValidator(key="fieldErrors.requiredString")
-	public void setInstitutionName(String institutionName) {
-		this.institutionName = institutionName;
-	}
-
-	public String getStudentLevel() {
-		return studentLevel;
-	}
-
-	@RequiredStringValidator(key="fieldErrors.requiredString")
-	public void setStudentLevel(String studentLevel) {
-		this.studentLevel = studentLevel;
 	}
 
 	public String getPreferredTiming() {
@@ -223,4 +148,13 @@ public class Inquiry implements Model {
 		}
 		return "Error serializing the object!";
 	}
+
+	public Student getStudent() {
+		return student;
+	}
+	
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+	
 }

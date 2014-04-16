@@ -2,28 +2,26 @@ package com.royaltechnosoft.inquiry.controller.officer.inquiry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.model.Course;
 import com.royaltechnosoft.inquiry.model.Inquiry;
+import com.royaltechnosoft.inquiry.model.Student;
 import com.royaltechnosoft.inquiry.service.InquiryService;
 
-public class AddAction extends ControllerSupport implements ModelDriven<Inquiry>{
+public class AddAction extends ControllerSupport{
 	@Autowired private InquiryService inquiryService;
 	private Inquiry inquiry;
+	private Student student;
 	private Integer courseID;
 	
 	public String execute() {
+		inquiry.setStudent(student);
 		inquiryService.saveNew(inquiry);
+		
 		addActionMessage((getActionProperty("successMsg")));
 		return SUCCESS;
-	}
-	
-	public Inquiry getModel() {
-		inquiry = new Inquiry();
-		return inquiry;
 	}
 	
 	// Auto generated setters and getters
@@ -31,7 +29,7 @@ public class AddAction extends ControllerSupport implements ModelDriven<Inquiry>
 		return inquiry;
 	}
 	
-	@VisitorFieldValidator(appendPrefix=false)
+	@VisitorFieldValidator
 	public void setInquiry(Inquiry inquiry) {
 		this.inquiry = inquiry;
 	}
@@ -49,7 +47,13 @@ public class AddAction extends ControllerSupport implements ModelDriven<Inquiry>
 		return courseID;
 	}
 
+	public Student getStudent() {
+		return student;
+	}
+
+	@VisitorFieldValidator
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
 }
-
-
-

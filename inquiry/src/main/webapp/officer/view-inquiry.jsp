@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <s:include value="../template/header.jsp">
-	<s:param name="title" value="inquiry.studentName"/>
+	<s:param name="title" value="inquiry.student.name"/>
 </s:include>
 
 
@@ -29,7 +29,7 @@
 }
 </style>
 
-<span style="font-size:24px;font-weight:bold"><s:property value="inquiry.studentName"/> - <s:property value="inquiry.course.name"/></span>
+<span style="font-size:24px;font-weight:bold"><s:property value="inquiry.student.name"/> - <s:property value="inquiry.course.name"/></span>
 <s:if test="%{inquiry.status!='c'}">
 	<button onclick="closeInquiry();" style="float:right;margin-right: 20px">Close Inquiry</button>
 </s:if>
@@ -38,33 +38,33 @@
 <table>
     <tr>
         <td style="text-align:right">Name:</td>
-        <td><s:property value="inquiry.studentName"/></td>
+        <td><s:property value="inquiry.student.name"/></td>
         <td style="text-align:right">Date:</td>
         <td><s:date name="inquiry.dateCreated" format="MMMM d, yyyy" /></td>
     </tr>
     <tr>
         <td style="text-align:right">Mobile:</td>
-        <td><s:property value="inquiry.studentMobile"/></td>
+        <td><s:property value="inquiry.student.mobile"/></td>
     </tr>
     <tr>
         <td style="text-align:right">Telephone:</td>
-        <td><s:property value="inquiry.studentTelephone"/></td>
+        <td><s:property value="inquiry.student.telephone"/></td>
     </tr>
     <tr valign="top">
         <td style="text-align:right">Address:</td>
-        <td><s:property value="inquiry.studentAddress"/></td>
+        <td><s:property value="inquiry.student.address"/></td>
     </tr>
     <tr valign="top">
         <td style="text-align:right">Email:</td>
-        <td><s:property value="inquiry.studentEmail"/></td>
+        <td><s:property value="inquiry.student.email"/></td>
     </tr>
     <tr>
         <td style="text-align:right">Institution Name:</td>
-        <td width="300px"><s:property value="inquiry.institutionName"/></td>
+        <td width="300px"><s:property value="inquiry.student.institutionName"/></td>
     </tr>
     <tr>
         <td style="text-align:right">Grade/Semester:</td>
-        <td><s:property value="inquiry.studentLevel"/></td>
+        <td><s:property value="inquiry.student.educationLevelString"/></td>
     </tr>
 </table>
 
@@ -104,6 +104,8 @@
 	<s:submit value="Add" />
 	</s:form>
 </s:if>
+<br/>
+<s:if test="%{!inquiry.followups.isEmpty()}">
 <table border="0" cellspacing="0" cellpadding="5" class="table">
   <tr class="tableHeading">
     <th scope="col">Date &amp; Time</th>
@@ -118,6 +120,7 @@
 	  </tr>
   </s:iterator>
 </table>
+</s:if>
 
 
 

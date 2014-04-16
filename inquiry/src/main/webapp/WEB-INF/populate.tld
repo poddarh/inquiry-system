@@ -15,8 +15,8 @@
 	</tag>
 
 	<tag>
-		<name>studentLevels</name>
-		<tag-class>com.royaltechnosoft.inquiry.tag.PopulateStudentLevelsTag</tag-class>
+		<name>educationLevels</name>
+		<tag-class>com.royaltechnosoft.inquiry.tag.PopulateEducationLevelsTag</tag-class>
 		<body-content>empty</body-content>
 		<description>This tag is for displaying images</description>
 	</tag>

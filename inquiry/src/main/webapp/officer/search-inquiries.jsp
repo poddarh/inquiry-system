@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="populate" uri="/populate"%>
 <s:include value="../template/header.jsp">
-	<s:param name="title" value="#inquiry.studentName"/>
+	<s:param name="title" value="Search"/>
 </s:include>
 
 <script>
@@ -110,7 +110,7 @@
   </tr>
   <s:iterator value="inquiries" var="inquiry">
 	  <tr class="tableRow" onclick="openInquiry(<s:property value='#inquiry.inquiryID'/>)">
-	    <td><s:property value="#inquiry.studentName"/></td>
+	    <td><s:property value="#inquiry.student.name"/></td>
 	    <td><s:property value="#inquiry.course.name"/></td>
 	    <td><s:date name="#inquiry.dateCreated" format="MMM dd, yyyy"/></td>
 	    <td><s:property value="#inquiry.statusString"/></td>

@@ -41,7 +41,7 @@ function openInquiry(inquiryId){
 <s:iterator value="followups" var="followup">
 
   <tr class="tableRow" onclick='openInquiry(<s:property value="#followup.inquiryID" />);'>
-    <td><s:property value="#followup.inquiry.studentName" /></td>
+    <td><s:property value="#followup.inquiry.student.name" /></td>
     <td><s:property value="#followup.inquiry.course.name" /></td>
     <td><s:date name="#followup.inquiry.dateCreated" format="MMM dd, yyyy" /></td>
     <td><s:date name="#followup.nextScheduledDate" format="MMM dd, yyyy" /></td>

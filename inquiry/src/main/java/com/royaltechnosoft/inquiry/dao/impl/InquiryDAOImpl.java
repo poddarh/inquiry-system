@@ -9,6 +9,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 
 import com.royaltechnosoft.inquiry.dao.InquiryDAO;
 import com.royaltechnosoft.inquiry.model.Inquiry;
@@ -24,8 +25,10 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(Inquiry.class);
 		
-		if(name!=null && name.trim().length()>0)
-			criteria.add(Restrictions.like("studentName", name, MatchMode.ANYWHERE));
+		if(name!=null && name.trim().length()>0){
+			criteria.createAlias("student", "student");
+			criteria.add(Restrictions.like("student.name", name, MatchMode.ANYWHERE));
+		}
 		if(newerThan!=null)
 			criteria.add(Restrictions.ge("dateCreated", newerThan));
 		if(olderThan!=null)
@@ -51,8 +54,10 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(Inquiry.class);
 		
-		if(name!=null && name.trim().length()>0)
-			criteria.add(Restrictions.like("studentName", name, MatchMode.ANYWHERE));
+		if(name!=null && name.trim().length()>0){
+			criteria.createAlias("student", "student", JoinType.LEFT_OUTER_JOIN);
+			criteria.add(Restrictions.like("student.name", name, MatchMode.ANYWHERE));
+		}
 		if(newerThan!=null)
 			criteria.add(Restrictions.ge("dateCreated", newerThan));
 		if(olderThan!=null)
