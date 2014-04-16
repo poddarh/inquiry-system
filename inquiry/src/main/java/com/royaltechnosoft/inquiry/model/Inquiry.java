@@ -27,7 +27,7 @@ public class Inquiry implements Model {
 	
 	@Id
 	@GeneratedValue
-	private Integer inquiryID;
+	private Integer inquiryId;
 	@Column(nullable = false)
 	private Date dateCreated;
 	@OneToOne(orphanRemoval=true,optional=false,cascade={CascadeType.ALL})
@@ -74,12 +74,12 @@ public class Inquiry implements Model {
 		this.followups = followups;
 	}
 	
-	public Integer getInquiryID() {
-		return inquiryID;
+	public Integer getInquiryId() {
+		return inquiryId;
 	}
 
-	public void setInquiryID(Integer inquiryID) {
-		this.inquiryID = inquiryID;
+	public void setInquiryId(Integer inquiryId) {
+		this.inquiryId = inquiryId;
 	}
 
 	public Date getDateCreated() {

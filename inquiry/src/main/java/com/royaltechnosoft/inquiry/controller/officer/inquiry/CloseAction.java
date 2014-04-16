@@ -7,20 +7,20 @@ import com.royaltechnosoft.inquiry.service.InquiryService;
 
 public class CloseAction extends ControllerSupport {
 	@Autowired private InquiryService inquiryService;
-	private Integer inquiryID;
+	private Integer inquiryId;
 	
 	public String execute() {
-		inquiryService.close(inquiryID);
+		inquiryService.close(inquiryId);
 		addActionMessage((getActionProperty("successMsg")));
 		return SUCCESS;
 	}
 
-	public Integer getInquiryID() {
-		return inquiryID;
+	public Integer getInquiryId() {
+		return inquiryId;
 	}
 
-	public void setInquiryID(Integer inquiryID) {
-		this.inquiryID = inquiryID;
+	public void setInquiryId(Integer inquiryId) {
+		this.inquiryId = inquiryId;
 	}
 }
 

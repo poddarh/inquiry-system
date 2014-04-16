@@ -14,12 +14,14 @@ public class AddAction extends ControllerSupport{
 	@Autowired private InquiryService inquiryService;
 	private Inquiry inquiry;
 	private Student student;
-	private Integer courseID;
+	private Integer courseId;
 	
 	public String execute() {
 		inquiry.setStudent(student);
 		inquiryService.saveNew(inquiry);
-		
+		inquiry=null;
+		student=null;
+		courseId=null;
 		addActionMessage((getActionProperty("successMsg")));
 		return SUCCESS;
 	}
@@ -35,16 +37,16 @@ public class AddAction extends ControllerSupport{
 	}
 	
 	@RequiredFieldValidator(key="fieldErrors.required")
-	public void setCourseID(Integer courseID) {
-		this.courseID=courseID;
+	public void setCourseId(Integer courseId) {
+		this.courseId=courseId;
 		if(inquiry==null)
 			inquiry = new Inquiry();
 		inquiry.setCourse(new Course());
-		inquiry.getCourse().setCourseId(1);
+		inquiry.getCourse().setCourseId(courseId);
 	}
 	
-	public Integer getCourseID() {
-		return courseID;
+	public Integer getCourseId() {
+		return courseId;
 	}
 
 	public Student getStudent() {

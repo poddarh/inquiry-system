@@ -7,9 +7,9 @@ import com.royaltechnosoft.inquiry.model.Inquiry;
 
 public interface InquiryDAO extends DAO<Inquiry> {
 	List<Inquiry> search(String name, Date newerThan, Date olderThan,
-			Integer courseID, Character status, int page);
+			Integer courseId, Character status, int page);
 	int countPage(String name, Date newerThan, Date olderThan,
-			Integer courseID, Character status);
+			Integer courseId, Character status);
 	public Inquiry findOneWithFollowups(Inquiry model);
-	public Inquiry findOneWithFollowups(Integer inquiryID);
+	public Inquiry findOneWithFollowups(Integer inquiryId);
 }

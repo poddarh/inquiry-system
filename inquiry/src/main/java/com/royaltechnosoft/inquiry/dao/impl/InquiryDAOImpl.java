@@ -21,7 +21,7 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 	}
 
 	public List<Inquiry> search(String name, Date newerThan, Date olderThan,
-			Integer courseID, Character status, int page) {
+			Integer courseId, Character status, int page) {
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(Inquiry.class);
 		
@@ -33,8 +33,8 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 			criteria.add(Restrictions.ge("dateCreated", newerThan));
 		if(olderThan!=null)
 			criteria.add(Restrictions.lt("dateCreated", olderThan));
-		if(courseID!=null)
-			criteria.add(Restrictions.eq("course.courseId", courseID));
+		if(courseId!=null)
+			criteria.add(Restrictions.eq("course.courseId", courseId));
 		if(status!=null)
 			criteria.add(Restrictions.eq("status", status));
 		
@@ -50,7 +50,7 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 	}
 	
 	public int countPage(String name, Date newerThan, Date olderThan,
-			Integer courseID, Character status) {
+			Integer courseId, Character status) {
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(Inquiry.class);
 		
@@ -62,8 +62,8 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 			criteria.add(Restrictions.ge("dateCreated", newerThan));
 		if(olderThan!=null)
 			criteria.add(Restrictions.lt("dateCreated", olderThan));
-		if(courseID!=null)
-			criteria.add(Restrictions.eq("course.courseId", courseID));
+		if(courseId!=null)
+			criteria.add(Restrictions.eq("course.courseId", courseId));
 		if(status!=null)
 			criteria.add(Restrictions.eq("status", status));
 		
@@ -83,9 +83,9 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		return inquiry;
 	}
 
-	public Inquiry findOneWithFollowups(Integer inquiryID) {
+	public Inquiry findOneWithFollowups(Integer inquiryId) {
 		Session session = getSession();
-		Criteria criteria = DAOUtil.createCriteriaFromId(inquiryID, Inquiry.class, session);
+		Criteria criteria = DAOUtil.createCriteriaFromId(inquiryId, Inquiry.class, session);
 		Inquiry inquiry =  (Inquiry) criteria.uniqueResult();
 		inquiry.getFollowups().size();
 		closeSession(session);

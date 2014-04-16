@@ -23,7 +23,7 @@ public class FollowupServiceImpl extends ServiceSupport implements
 		
 		// Code to retrieve the inquiry objects for the followups
 		for (Followup followup : followups) {
-			Inquiry inquiry = inquiryDAO.findOne(followup.getInquiryID());
+			Inquiry inquiry = inquiryDAO.findOne(followup.getInquiryId());
 			followup.setInquiry(inquiry);
 		}
 		
@@ -36,7 +36,7 @@ public class FollowupServiceImpl extends ServiceSupport implements
 
 	public void add(Followup followup, Character inquiryStatus) {
 		Followup queryModel = new Followup();
-		queryModel.setInquiryID(followup.getInquiryID());
+		queryModel.setInquiryId(followup.getInquiryId());
 		queryModel.setIsNextPending(true);
 		
 		Followup updateModel = new Followup();
@@ -47,10 +47,10 @@ public class FollowupServiceImpl extends ServiceSupport implements
 		followup.setIsNextPending(true);
 		followup.setTime(new Date());
 		followupDAO.save(followup);
-		if(followup.getFollowupID()!=null && inquiryStatus==Inquiry.STATUS_FRESH){
+		if(followup.getFollowupId()!=null && inquiryStatus==Inquiry.STATUS_FRESH){
 			Inquiry inquiry = new Inquiry();
 			inquiry.setStatus(Inquiry.STATUS_OPEN);
-			inquiryDAO.update(followup.getInquiryID(), inquiry);
+			inquiryDAO.update(followup.getInquiryId(), inquiry);
 		}
 	}
 	

@@ -16,6 +16,7 @@ public class AddAction extends ControllerSupport {
 			return INPUT;
 		}else{
 			courseService.addCourse(courseName.trim());
+			courseName=null;
 			addActionMessage("Added Successfully!");
 			return SUCCESS;
 		}

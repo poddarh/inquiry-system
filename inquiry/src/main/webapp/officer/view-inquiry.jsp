@@ -18,7 +18,7 @@
   
   function closeInquiry(){
 	  if(confirm("Are you sure you want to close this inquiry?"))
-	  	window.open("CloseInquiry.action?inquiryID=<s:property value='inquiry.inquiryID'/>","_self");
+	  	window.open("CloseInquiry.action?inquiryId=<s:property value='inquiry.inquiryId'/>","_self");
   }
 </script>
 
@@ -97,7 +97,7 @@
 <h4>Followup Details:</h4>
 <s:if test="%{inquiry.status!='c'}">
 	<s:form theme="simple" action="AddFollowup">
-	<s:hidden name="inquiryID" value='%{inquiry.inquiryID}' />
+	<s:hidden name="inquiryId" value='%{inquiry.inquiryId}' />
 	<s:hidden name="inquiryStatus" value='%{inquiry.status}' />
 	<label for="remark">Remark: </label><s:textfield name="remark" size="50" />
 	<label for="nextScheduledDate">Call again on: </label><s:textfield name="nextScheduledDate" id="nextScheduledDate" size="10" />

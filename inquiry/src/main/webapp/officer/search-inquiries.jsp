@@ -54,7 +54,7 @@
 <s:hidden name="name"/>
 <s:hidden name="newerThan"/>
 <s:hidden name="olderThan"/>
-<s:hidden name="courseID"/>
+<s:hidden name="courseId"/>
 <s:hidden name="status"/>
 </s:form>
 <s:form action="SearchInquiries" theme="simple" id="searchInquiryForm" >
@@ -73,7 +73,7 @@
       </tr>
       <tr>
         <td class="formLabel">Course</td>
-        <td><s:select list="#attr.courses" listKey="courseId" listValue="name" name="courseID" emptyOption="true" /></td>
+        <td><s:select list="#attr.courses" listKey="courseId" listValue="name" name="courseId" emptyOption="true" /></td>
       </tr>
       <tr>
         <td class="formLabel">Status</td>
@@ -109,7 +109,7 @@
     <th scope="col">Status</th>
   </tr>
   <s:iterator value="inquiries" var="inquiry">
-	  <tr class="tableRow" onclick="openInquiry(<s:property value='#inquiry.inquiryID'/>)">
+	  <tr class="tableRow" onclick="openInquiry(<s:property value='#inquiry.inquiryId'/>)">
 	    <td><s:property value="#inquiry.student.name"/></td>
 	    <td><s:property value="#inquiry.course.name"/></td>
 	    <td><s:date name="#inquiry.dateCreated" format="MMM dd, yyyy"/></td>

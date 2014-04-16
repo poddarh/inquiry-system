@@ -57,7 +57,7 @@
 			<result>list-fresh-inquiries.jsp</result>
 		</action>
 		<action name="CloseInquiry" class="controller.officer.closeInquiry">
-			<result type="redirectAction">GetInquiry.action?inquiryId=${inquiryID}</result>
+			<result type="redirectAction">GetInquiry.action?inquiryId=${inquiryId}</result>
 		</action>
 
 		<!-- Course -->
@@ -71,8 +71,8 @@
 
 		<!-- List Follow ups -->
 		<action name="AddFollowup" class="controller.officer.addFollowup">
-			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryID}</result>
-			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryID}</result>
+			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}</result>
+			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}</result>
 		</action>
 		<action name="ListFollowups" class="controller.officer.listFollowups">
 			<result>list-followups.jsp</result>

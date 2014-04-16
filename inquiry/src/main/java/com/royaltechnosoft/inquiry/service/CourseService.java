@@ -8,5 +8,5 @@ public interface CourseService extends Service {
 	List<Course> getCourses();
 	boolean exists(String name);
 	void addCourse(String name);
-	void removeCourse(Integer courseID);
+	void removeCourse(Integer courseId);
 }

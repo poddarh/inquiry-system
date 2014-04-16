@@ -30,9 +30,9 @@ public class CourseServiceImpl extends ServiceSupport implements CourseService {
 		courseDAO.save(course);
 	}
 
-	public void removeCourse(Integer courseID) {
+	public void removeCourse(Integer courseId) {
 		Course course = new Course();
-		course.setCourseId(courseID);
+		course.setCourseId(courseId);
 		
 		Inquiry inquiry = new Inquiry();
 		inquiry.setCourse(course);

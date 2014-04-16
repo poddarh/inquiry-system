@@ -38,7 +38,7 @@
     <th scope="col">Status</th>
   </tr>
   <s:iterator value="inquiries" var="inquiry">
-	  <tr class="tableRow" onclick="openInquiry(<s:property value='#inquiry.inquiryID'/>)">
+	  <tr class="tableRow" onclick="openInquiry(<s:property value='#inquiry.inquiryId'/>)">
 	    <td><s:property value="#inquiry.student.name"/></td>
 	    <td><s:property value="#inquiry.course.name"/></td>
 	    <td><s:date name="#inquiry.dateCreated" format="MMM dd, yyyy"/></td>

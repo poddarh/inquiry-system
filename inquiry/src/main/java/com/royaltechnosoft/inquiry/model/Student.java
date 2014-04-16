@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 public class Student {
 	@Id
 	@GeneratedValue
-	private Integer studentID;
+	private Integer studentId;
 	@Column(length = 45, nullable = false)
 	private String name;
 	@Column(length = 11, nullable = false)
@@ -49,11 +49,11 @@ public class Student {
 	}
 	
 	//Getters and setters
-	public Integer getStudentID() {
-		return studentID;
+	public Integer getStudentId() {
+		return studentId;
 	}
-	public void setStudentID(Integer studentID) {
-		this.studentID = studentID;
+	public void setStudentId(Integer studentId) {
+		this.studentId = studentId;
 	}
 	public String getName() {
 		return name;

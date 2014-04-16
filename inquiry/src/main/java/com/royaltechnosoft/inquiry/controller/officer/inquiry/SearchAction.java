@@ -17,13 +17,13 @@ public class SearchAction extends ControllerSupport{
 	private String name;
 	private Date newerThan;
 	private Date olderThan;
-	private Integer courseID;
+	private Integer courseId;
 	private Character status;
 	
 	public String execute() {
 		page = page==0 ? 1 : page;
-		inquiries = inquiryService.search(name, newerThan, olderThan, courseID, status, page);
-		totalPages = inquiryService.countPages(name, newerThan, olderThan, courseID, status);
+		inquiries = inquiryService.search(name, newerThan, olderThan, courseId, status, page);
+		totalPages = inquiryService.countPages(name, newerThan, olderThan, courseId, status);
 		return SUCCESS;
 	}
 	
@@ -76,12 +76,12 @@ public class SearchAction extends ControllerSupport{
 		this.olderThan = olderThan;
 	}
 
-	public Integer getCourseID() {
-		return courseID;
+	public Integer getCourseId() {
+		return courseId;
 	}
 
-	public void setCourseID(Integer courseID) {
-		this.courseID = courseID;
+	public void setCourseId(Integer courseId) {
+		this.courseId = courseId;
 	}
 
 	public Character getStatus() {

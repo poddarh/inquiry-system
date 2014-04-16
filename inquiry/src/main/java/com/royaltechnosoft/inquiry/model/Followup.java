@@ -22,7 +22,7 @@ public class Followup implements Model, Comparable<Followup> {
 
 	@Id
 	@GeneratedValue
-	private Integer followupID;
+	private Integer followupId;
 	@Column(nullable = false)
 	private Date time;
 	@Column(length = 200, nullable = false)
@@ -43,26 +43,26 @@ public class Followup implements Model, Comparable<Followup> {
 		this.isNextPending = isNextPending;
 	}
 
-	public Integer getFollowupID() {
-		return followupID;
+	public Integer getFollowupId() {
+		return followupId;
 	}
 	
-	public void setFollowupID(Integer followupID) {
-		this.followupID = followupID;
+	public void setFollowupId(Integer followupId) {
+		this.followupId = followupId;
 	}
 	
 	@Transient
-	public Integer getInquiryID() {
+	public Integer getInquiryId() {
 		if(inquiry!=null)
-			return inquiry.getInquiryID();
+			return inquiry.getInquiryId();
 		else
 			return null;
 	}
 	
 	@RequiredFieldValidator(key="fieldErrors.required")
-	public void setInquiryID(Integer inquiryID) {
+	public void setInquiryId(Integer inquiryId) {
 		inquiry = new Inquiry();
-		inquiry.setInquiryID(inquiryID);
+		inquiry.setInquiryId(inquiryId);
 	}
 
 	public Date getTime() {

@@ -33,13 +33,13 @@ public class InquiryServiceImpl extends ServiceSupport implements
 	}
 
 	public List<Inquiry> search(String name, Date newerThan, Date olderThan,
-			Integer courseID, Character status, int page) {
-		return inquiryDAO.search(name, newerThan, olderThan, courseID, status,page);
+			Integer courseId, Character status, int page) {
+		return inquiryDAO.search(name, newerThan, olderThan, courseId, status,page);
 	}
 
 	public int countPages(String name, Date newerThan, Date olderThan,
-			Integer courseID, Character status) {
-		return inquiryDAO.countPage(name, newerThan,olderThan, courseID, status);
+			Integer courseId, Character status) {
+		return inquiryDAO.countPage(name, newerThan,olderThan, courseId, status);
 	}
 
 	public List<Inquiry> listFresh(int page) {
@@ -54,9 +54,9 @@ public class InquiryServiceImpl extends ServiceSupport implements
 		return inquiryDAO.countPage(inquiry);
 	}
 
-	public void close(Integer inquiryID) {
+	public void close(Integer inquiryId) {
 		Followup queryModel = new Followup();
-		queryModel.setInquiryID(inquiryID);
+		queryModel.setInquiryId(inquiryId);
 		queryModel.setIsNextPending(true);
 		
 		Followup updateModel = new Followup();
@@ -66,7 +66,7 @@ public class InquiryServiceImpl extends ServiceSupport implements
 		
 		Inquiry inquiry = new Inquiry();
 		inquiry.setStatus(Inquiry.STATUS_CLOSED);
-		inquiryDAO.update(inquiryID, inquiry);
+		inquiryDAO.update(inquiryId, inquiry);
 		
 	}
 
