@@ -31,7 +31,7 @@ public class Student {
 	private String email;
 	@Column(length = 75, nullable = false)
 	private String institutionName;
-	@Column(length = 12, nullable = false)
+	@Column(length = 3, nullable = false)
 	private String educationLevel;
 	
 	public String getEducationLevelString() {
