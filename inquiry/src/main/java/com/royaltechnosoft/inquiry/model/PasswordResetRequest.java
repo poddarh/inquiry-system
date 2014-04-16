@@ -2,6 +2,7 @@ package com.royaltechnosoft.inquiry.model;
 
 import java.util.Date;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +17,8 @@ import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
-@Table(name = "passwordRequests")
-public class PasswordRequest implements Model {
+@Table(name = "passwordResetRequests")
+public class PasswordResetRequest implements Model {
 
 	@Id
 	@GeneratedValue
