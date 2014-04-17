@@ -11,7 +11,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class EmailUtil {
-
+	
+	
+	// Sends an email to the specified email
 	public static boolean sendEmail(String to, String subject, String body) {
 
 		final String fromEmail = "technosoftroyal@gmail.com"; // requires valid gmail id
@@ -34,15 +36,8 @@ public class EmailUtil {
 
 		try {
 			MimeMessage msg = new MimeMessage(session);
-			// set message headers
-			// msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-			// msg.addHeader("format", "flowed");
-			// msg.addHeader("Content-Transfer-Encoding", "8bit");
-
 			msg.setSubject(subject, "UTF-8");
-
 			msg.setText(body, "UTF-8");
-
 			msg.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(to, false));
 			Transport.send(msg);

@@ -73,16 +73,18 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		closeSession(session);
 		return pages;
 	}
-
-	public Inquiry findOneWithFollowups(Inquiry model) {
+	
+	// Returns the requested inquiry model using queryModel with the follow-ups list populated
+	public Inquiry findOneWithFollowups(Inquiry queryModel) {
 		Session session = getSession();
-		Criteria criteria = DAOUtil.createCriteria(model, session);
+		Criteria criteria = DAOUtil.createCriteria(queryModel, session);
 		Inquiry inquiry = (Inquiry) criteria.uniqueResult();
 		inquiry.getFollowups().size();
 		closeSession(session);
 		return inquiry;
 	}
 
+	// Returns the requested inquiry model using inquiryId with the follow-ups list populated
 	public Inquiry findOneWithFollowups(Integer inquiryId) {
 		Session session = getSession();
 		Criteria criteria = DAOUtil.createCriteriaFromId(inquiryId, Inquiry.class, session);

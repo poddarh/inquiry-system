@@ -1,4 +1,4 @@
-package com.royaltechnosoft.inquiry.controller.officer.followup;
+package com.royaltechnosoft.inquiry.controller.followup;
 
 import java.util.List;
 
@@ -12,12 +12,13 @@ public class ListAction extends ControllerSupport {
 	@Autowired
 	private FollowupService followupService;
 	private List<Followup> followups;
-	private int page;
+	private int page = 1;
 	private int totalPages;
 
 	public String execute() throws Exception {
-		page = page==0 ? 1 : page;
+		// Get a page of followups that are scheduled for today or earlier and has not been done
 		followups = followupService.list(page);
+		// Get maximum number of pages required for the complete list to be displayed
 		totalPages = followupService.getTotalPageNumber();
 		return SUCCESS;
 	}

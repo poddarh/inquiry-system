@@ -18,16 +18,21 @@ public class LoginAction extends ControllerSupport implements SessionAware {
 	private String password;
 	
 	public String execute() {
+		// Find and retrieve user with the email and the password given
 		User user = userService.authenticate(email,password);
+		// If no such user found, send an error message
 		if(user==null){
 			addActionError("Incorrect email or password!");
 			return INPUT;
-		}else{
+		}
+		// Else put the user object in the session for later use
+		else{
 			session.put("user", user);
 			return SUCCESS;
 		}
 	}
 
+	// Getters and setters
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}

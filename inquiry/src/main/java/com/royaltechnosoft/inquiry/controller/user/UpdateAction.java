@@ -11,48 +11,62 @@ import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.model.User;
 import com.royaltechnosoft.inquiry.service.UserService;
 
-public class UpdateAction extends ControllerSupport implements SessionAware, ModelDriven<User> {
-	@Autowired private UserService userService;
+public class UpdateAction extends ControllerSupport implements SessionAware,
+		ModelDriven<User> {
+	@Autowired
+	private UserService userService;
 	private Map<String, Object> session;
 	private User modifiedUser;
 	private String confirmPassword;
 	private String currentPassword;
-	
+
 	public void validate() {
-		String password = null;
-		if(modifiedUser!=null)
-			password=modifiedUser.getPassword();
-		if(confirmPassword!=null || password!=null){
-			if(currentPassword!=null && currentPassword.trim().length()!=0){
-				if(!currentPassword.equals(((User)session.get("user")).getPassword())){
-					addFieldError("currentPassword", "Incorrect current password");
+		// Initialize password variable with password entered by the user, if at
+		// all entered.
+		String newPassword = modifiedUser == null ? null : modifiedUser
+				.getPassword();
+
+		// Checks if any of the two, confirm password and password, aren't empty
+		if (!isEmpty(confirmPassword) || !isEmpty(newPassword)) {
+
+			if (!isEmpty(currentPassword)) {
+				// Checks if the current password entered matches with the
+				// actual password
+				if (!currentPassword.equals(((User) session.get("user"))
+						.getPassword())) {
+					addFieldError("currentPassword",
+							"Incorrect current password");
 				}
-			}else
+			} else
 				addFieldError("currentPassword", "Incorrect current password");
-		}else if(currentPassword!=null){
-			addFieldError("password", "Please enter new password");
-		}
-		if(confirmPassword!=null && password!=null){
-			if(!confirmPassword.equals(password)){
-				addFieldError("password", "Password and confirm password do not match");
+
+			// Checks if new password and confirm password matches, if not then
+			// sends an error message
+			if (!confirmPassword.equals(newPassword)) {
+				addFieldError("password",
+						"Password and confirm password do not match");
 			}
 		}
-		
 	}
-	
+
+	// Checks if a string is empty or is null
+	private boolean isEmpty(String string) {
+		return string == null || string.trim().length() == 0;
+	}
+
 	public String execute() {
 		User user = (User) session.get("user");
-		if(user==null)
-			return LOGIN;
-		session.put("user",userService.updateUserDetails(user,modifiedUser));
+		// Update the user record in the database and also replace it in the session map
+		session.put("user", userService.updateUserDetails(user, modifiedUser));
 		addActionMessage("Successfully updated.");
 		return SUCCESS;
 	}
-	
+
+	// Getters and setters
 	public User getModel() {
 		return modifiedUser = new User();
 	}
-	
+
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
@@ -60,7 +74,7 @@ public class UpdateAction extends ControllerSupport implements SessionAware, Mod
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
-	
+
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
@@ -68,8 +82,8 @@ public class UpdateAction extends ControllerSupport implements SessionAware, Mod
 	public User getModifiedUser() {
 		return modifiedUser;
 	}
-	
-	@VisitorFieldValidator(appendPrefix=false)
+
+	@VisitorFieldValidator(appendPrefix = false)
 	public void setModifiedUser(User modifiedUser) {
 		this.modifiedUser = modifiedUser;
 	}
@@ -81,5 +95,5 @@ public class UpdateAction extends ControllerSupport implements SessionAware, Mod
 	public void setCurrentPassword(String currentPassword) {
 		this.currentPassword = currentPassword;
 	}
-	
+
 }

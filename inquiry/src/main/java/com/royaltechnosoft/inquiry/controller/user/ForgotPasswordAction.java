@@ -12,12 +12,13 @@ public class ForgotPasswordAction extends ControllerSupport {
 	private String email;
 	
 	public String execute() {
+		// Send a password reset link to the email if registered, if not, 
 		if(userService.forgotPassword(email)){
 			addActionMessage("A password reset link has been sent to your registered email.");
 			return SUCCESS;
 		}
 		else{
-			addActionMessage("This email is not registered with us.");
+			addActionError("This email is not registered with us.");
 			return INPUT;
 		}
 	}

@@ -1,4 +1,4 @@
-package com.royaltechnosoft.inquiry.controller.officer.inquiry;
+package com.royaltechnosoft.inquiry.controller.inquiry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -6,21 +6,23 @@ import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.model.Inquiry;
 import com.royaltechnosoft.inquiry.service.InquiryService;
 
-public class GetAction extends ControllerSupport{
-	@Autowired private InquiryService inquiryService;
-	
+public class GetAction extends ControllerSupport {
+	@Autowired
+	private InquiryService inquiryService;
 	private Inquiry inquiry;
 	private Integer inquiryId;
-	
+
 	public String execute() {
+		// Find and retrieve an inquiry using inquiryId
 		inquiry = inquiryService.getInquiry(inquiryId);
-		if(inquiry!=null)
+		
+		if (inquiry != null)
 			return SUCCESS;
 		else
 			return ERROR;
 	}
-	
-	// Auto generated setters and getters
+
+	// Getters and setters
 	public Integer getInquiryId() {
 		return inquiryId;
 	}
@@ -32,7 +34,7 @@ public class GetAction extends ControllerSupport{
 	public Inquiry getInquiry() {
 		return inquiry;
 	}
-	
+
 	public void setInquiry(Inquiry inquiry) {
 		this.inquiry = inquiry;
 	}

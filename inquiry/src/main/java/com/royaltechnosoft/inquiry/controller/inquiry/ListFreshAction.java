@@ -1,4 +1,4 @@
-package com.royaltechnosoft.inquiry.controller.officer.inquiry;
+package com.royaltechnosoft.inquiry.controller.inquiry;
 
 import java.util.List;
 
@@ -8,20 +8,24 @@ import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.model.Inquiry;
 import com.royaltechnosoft.inquiry.service.InquiryService;
 
-public class ListFreshAction extends ControllerSupport{
-	@Autowired private InquiryService inquiryService;
+public class ListFreshAction extends ControllerSupport {
+	@Autowired
+	private InquiryService inquiryService;
 	private List<Inquiry> inquiries;
-	private int page;
+	private int page = 1;
 	private int totalPages;
-	
+
 	public String execute() {
-		page = page==0 ? 1 : page;
+		// List page of inquiries with the status fresh
 		inquiries = inquiryService.listFresh(page);
+		
+		// Maximum number of pages for inquiries with the status fresh
 		totalPages = inquiryService.getFreshPages();
+		
 		return SUCCESS;
 	}
 	
-	
+	// Getters and setters
 	public List<Inquiry> getInquiries() {
 		return inquiries;
 	}
@@ -47,6 +51,3 @@ public class ListFreshAction extends ControllerSupport{
 	}
 
 }
-
-
-

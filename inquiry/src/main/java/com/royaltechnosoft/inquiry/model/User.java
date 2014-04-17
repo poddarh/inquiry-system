@@ -6,10 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.struts2.json.JSONException;
-import org.apache.struts2.json.JSONUtil;
-
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 @Entity
 @Table(name = "users")
@@ -27,7 +26,7 @@ public class User implements Model {
 	@Column(nullable = false, length = 18)
 	private String role;
 
-	// Setters and getters
+	// Getters and setters
 	public Integer getUserId() {
 		return userId;
 	}
@@ -40,6 +39,8 @@ public class User implements Model {
 		return name;
 	}
 	
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "32")
+	@RegexFieldValidator(trim=true,regex="^[a-zA-Z ]*$",key="fieldErrors.lettersAndSpaces")
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -49,6 +50,7 @@ public class User implements Model {
 	}
 	
 	@EmailValidator(key="fieldErrors.email")
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "45")
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -57,6 +59,7 @@ public class User implements Model {
 		return password;
 	}
 
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "45")
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -69,12 +72,4 @@ public class User implements Model {
 		this.role = role;
 	}
 	
-	public String toString() {
-		try {
-			return JSONUtil.serialize(this);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return "Error serializing the object!";
-	}
 }

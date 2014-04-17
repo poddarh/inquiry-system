@@ -8,15 +8,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.struts2.json.JSONException;
-import org.apache.struts2.json.JSONUtil;
-
+import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 @Entity
 @Table(name = "inquiries")
@@ -25,24 +25,33 @@ public class Inquiry implements Model {
 	public static final char STATUS_OPEN = 'o';
 	public static final char STATUS_CLOSED = 'c';
 	
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue
 	private Integer inquiryId;
+	
 	@Column(nullable = false)
 	private Date dateCreated;
+	
 	@OneToOne(orphanRemoval=true,optional=false,cascade={CascadeType.ALL})
+	@JoinColumn(name="studentId")
 	private Student student;
-	@Column(length = 75, nullable = false)
+	
+	@Column(length = 45, nullable = false)
 	private String subjects;
+	
 	@Column(nullable = false)
 	private Character status;
+	
 	@ManyToOne(optional=false)
+	@JoinColumn(name="courseId")
 	private Course course;
-	@Column(length = 30)
+	
+	@Column(length = 32)
 	private String preferredTiming;
-	@Column(length = 45)
+	
+	@Column(length = 32)
 	private String referredBy;
-	@Column(nullable = false)
+	
+	@Column(nullable = false, length = 32)
 	private String inquiryHandledBy;
 	
 	@OneToMany(mappedBy="inquiry",orphanRemoval=true)
@@ -65,7 +74,7 @@ public class Inquiry implements Model {
 		}
 	}
 	
-	// Setters and getters
+	// Getters and setters
 	public List<Followup> getFollowups() {
 		return followups;
 	}
@@ -94,6 +103,7 @@ public class Inquiry implements Model {
 		return preferredTiming;
 	}
 
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "32")
 	public void setPreferredTiming(String preferredTiming) {
 		this.preferredTiming = preferredTiming;
 	}
@@ -102,6 +112,8 @@ public class Inquiry implements Model {
 		return referredBy;
 	}
 
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "32")
+	@RegexFieldValidator(trim=true,regex="^[a-zA-Z ]*$",key="fieldErrors.lettersAndSpaces")
 	public void setReferredBy(String referredBy) {
 		this.referredBy = referredBy;
 	}
@@ -111,6 +123,8 @@ public class Inquiry implements Model {
 	}
 
 	@RequiredStringValidator(key="fieldErrors.requiredString")
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "32")
+	@RegexFieldValidator(trim=true,regex="^[a-zA-Z ]*$",key="fieldErrors.lettersAndSpaces")
 	public void setInquiryHandledBy(String inquiryHandledBy) {
 		this.inquiryHandledBy = inquiryHandledBy;
 	}
@@ -120,6 +134,7 @@ public class Inquiry implements Model {
 	}
 
 	@RequiredStringValidator(key="fieldErrors.requiredString")
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "45")
 	public void setSubjects(String subjects) {
 		this.subjects = subjects;
 	}
@@ -140,15 +155,6 @@ public class Inquiry implements Model {
 		this.status = status;
 	}
 	
-	public String toString() {
-		try {
-			return JSONUtil.serialize(this);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return "Error serializing the object!";
-	}
-
 	public Student getStudent() {
 		return student;
 	}

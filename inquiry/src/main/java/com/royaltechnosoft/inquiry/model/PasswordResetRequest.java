@@ -2,19 +2,16 @@ package com.royaltechnosoft.inquiry.model;
 
 import java.util.Date;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.struts2.json.JSONException;
-import org.apache.struts2.json.JSONUtil;
-
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 @Entity
 @Table(name = "passwordResetRequests")
@@ -23,7 +20,7 @@ public class PasswordResetRequest implements Model {
 	@Id
 	@GeneratedValue
 	private Integer requestId;
-	@Column(nullable = false, length = 60)
+	@Column(nullable = false, length = 45)
 	private String email;
 	@Column(nullable = false)
 	private Date timeCreated;
@@ -42,6 +39,7 @@ public class PasswordResetRequest implements Model {
 		return email;
 	}
 	@RequiredFieldValidator(key="fieldErrors.requiredString")
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "45")
 	@EmailValidator(key="fieldErrors.email")
 	public void setEmail(String email) {
 		this.email = email;
@@ -55,18 +53,8 @@ public class PasswordResetRequest implements Model {
 	public String getToken() {
 		return token;
 	}
-	@RequiredStringValidator(key="fieldErrors.requiredString")
 	public void setToken(String token) {
 		this.token = token;
 	}
 	
-	@Override
-	public String toString() {
-		try {
-			return JSONUtil.serialize(this);
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 }

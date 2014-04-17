@@ -10,17 +10,17 @@
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
 	<!-- Injection in Action Classes Starts -->
-		<bean scope="prototype" id="controller.officer.addInquiry" 		class="com.royaltechnosoft.inquiry.controller.officer.inquiry.AddAction" />
-		<bean scope="prototype" id="controller.officer.closeInquiry" 		class="com.royaltechnosoft.inquiry.controller.officer.inquiry.CloseAction" />
-		<bean scope="prototype" id="controller.officer.getInquiry" 		class="com.royaltechnosoft.inquiry.controller.officer.inquiry.GetAction" />
-		<bean scope="prototype" id="controller.officer.searchInquiries" 		class="com.royaltechnosoft.inquiry.controller.officer.inquiry.SearchAction" />
-		<bean scope="prototype" id="controller.officer.listFreshInquiries" 		class="com.royaltechnosoft.inquiry.controller.officer.inquiry.ListFreshAction" />
+		<bean scope="prototype" id="controller.addInquiry" 		class="com.royaltechnosoft.inquiry.controller.inquiry.AddAction" />
+		<bean scope="prototype" id="controller.closeInquiry" 		class="com.royaltechnosoft.inquiry.controller.inquiry.CloseAction" />
+		<bean scope="prototype" id="controller.getInquiry" 		class="com.royaltechnosoft.inquiry.controller.inquiry.GetAction" />
+		<bean scope="prototype" id="controller.searchInquiries" 		class="com.royaltechnosoft.inquiry.controller.inquiry.SearchAction" />
+		<bean scope="prototype" id="controller.listFreshInquiries" 		class="com.royaltechnosoft.inquiry.controller.inquiry.ListFreshAction" />
 		
-		<bean scope="prototype" id="controller.officer.addCourse" 	class="com.royaltechnosoft.inquiry.controller.officer.course.AddAction" />
-		<bean scope="prototype" id="controller.officer.removeCourse" 	class="com.royaltechnosoft.inquiry.controller.officer.course.RemoveAction" />
+		<bean scope="prototype" id="controller.addCourse" 	class="com.royaltechnosoft.inquiry.controller.course.AddAction" />
+		<bean scope="prototype" id="controller.removeCourse" 	class="com.royaltechnosoft.inquiry.controller.course.RemoveAction" />
 		
-		<bean scope="prototype" id="controller.officer.addFollowup" 	class="com.royaltechnosoft.inquiry.controller.officer.followup.AddAction" />
-		<bean scope="prototype" id="controller.officer.listFollowups" 	class="com.royaltechnosoft.inquiry.controller.officer.followup.ListAction" />
+		<bean scope="prototype" id="controller.addFollowup" 	class="com.royaltechnosoft.inquiry.controller.followup.AddAction" />
+		<bean scope="prototype" id="controller.listFollowups" 	class="com.royaltechnosoft.inquiry.controller.followup.ListAction" />
 		
 		<bean scope="prototype" id="controller.userLogin" 	class="com.royaltechnosoft.inquiry.controller.user.LoginAction" />
 		<bean scope="prototype" id="controller.userLogout" 	class="com.royaltechnosoft.inquiry.controller.user.LogoutAction" />

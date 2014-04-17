@@ -20,22 +20,28 @@
 
 	<div class="container">
 		<div class="header">
-			<a href="#"><img src="" alt="Insert Logo Here" name="Insert_logo"
-				width="200" height="90" id="Insert_logo"
+			<a href="Index"><img src="/inquiry/template/royal-logo.png" alt="Insert Logo Here" name="Insert_logo"
+				width="200" id="Insert_logo"
 				style="background-color: #C6D580; display: block;" /></a>
 			<!-- end .header -->
 		</div>
 		<s:if test="%{#session.user!=null}">
 			<div class="sidebar1">
 				<ul class="nav">
-					<li><a href="ListFollowups.action">Scheduled Followups</a></li>
-					<li><a href="#">Inquiry</a></li>
-					<li><a href="add-inquiry.jsp">-&gt;Create New</a></li>
-					<li><a href="ListFreshInquiries.action">-&gt;List Fresh</a></li>
-					<li><a href="SearchInquiries.action">-&gt;Search</a></li>
-					<li><a href="manage-courses.jsp">Manage Courses</a></li>
-					<li><a href="account.jsp">Account</a></li>
-					<li><a href="../Logout.action">Logout</a></li>
+					<s:if test="%{#session.user.role=='officer'}">
+						<li><a href="/inquiry/officer/ListFollowups.action">Scheduled Followups</a></li>
+						<li><a href="#">Inquiry</a></li>
+						<li><a href="/inquiry/officer/add-inquiry.jsp">-&gt;Create New</a></li>
+						<li><a href="/inquiry/officer/ListFreshInquiries.action">-&gt;List Fresh</a></li>
+						<li><a href="/inquiry/officer/SearchInquiries.action">-&gt;Search</a></li>
+						<li><a href="/inquiry/officer/manage-courses.jsp">Manage Courses</a></li>
+						<li><a href="/inquiry/officer/account.jsp">Account</a></li>
+					</s:if>
+					<s:if test="%{#session.user.role=='typist'}">
+						<li><a href="/inquiry/typist/add-inquiry.jsp">Create New</a></li>
+						<li><a href="/inquiry/typist/account.jsp">Account</a></li>
+					</s:if>
+					<li><a href="/inquiry/Logout.action">Logout</a></li>
 				</ul>
 			</div>
 		</s:if>

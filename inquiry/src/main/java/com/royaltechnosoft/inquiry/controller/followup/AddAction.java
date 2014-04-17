@@ -1,4 +1,4 @@
-package com.royaltechnosoft.inquiry.controller.officer.followup;
+package com.royaltechnosoft.inquiry.controller.followup;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,10 +16,23 @@ public class AddAction extends ControllerSupport implements ModelDriven<Followup
 	private Character inquiryStatus;
 	
 	public String execute(){
+		// Add followup and if inquiry status in fresh, change it to open
 		followupService.add(followup,inquiryStatus);
 		return SUCCESS;
 	}
-
+	
+	// Getters and setters
+	
+	@VisitorFieldValidator(appendPrefix=false)
+	public void setFollowup(Followup followup) {
+		this.followup = followup;
+	}
+	
+	@RequiredFieldValidator
+	public void setInquiryStatus(Character inquiryStatus) {
+		this.inquiryStatus = inquiryStatus;
+	}
+	
 	public Followup getModel() {
 		followup = new Followup();
 		return followup;
@@ -29,18 +42,8 @@ public class AddAction extends ControllerSupport implements ModelDriven<Followup
 		return followup;
 	}
 
-	@VisitorFieldValidator(appendPrefix=false)
-	public void setFollowup(Followup followup) {
-		this.followup = followup;
-	}
-
 	public Character getInquiryStatus() {
 		return inquiryStatus;
-	}
-	
-	@RequiredFieldValidator
-	public void setInquiryStatus(Character inquiryStatus) {
-		this.inquiryStatus = inquiryStatus;
 	}
 	
 }

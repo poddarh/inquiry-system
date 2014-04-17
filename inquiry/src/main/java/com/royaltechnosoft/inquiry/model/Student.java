@@ -6,12 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.struts2.json.JSONException;
-import org.apache.struts2.json.JSONUtil;
-
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 @Entity
 @Table(name = "students")
@@ -19,20 +17,22 @@ public class Student {
 	@Id
 	@GeneratedValue
 	private Integer studentId;
-	@Column(length = 45, nullable = false)
+	@Column(length = 32, nullable = false)
 	private String name;
-	@Column(length = 11, nullable = false)
+	@Column(length = 10, nullable = false)
 	private String mobile;
-	@Column(length = 15)
+	@Column(length = 12)
 	private String telephone;
 	@Column(length = 100)
 	private String address;
 	@Column(length = 45)
 	private String email;
-	@Column(length = 75, nullable = false)
+	@Column(length = 45, nullable = false)
 	private String institutionName;
 	@Column(length = 3, nullable = false)
 	private String educationLevel;
+	
+	//Getters and setters
 	
 	public String getEducationLevelString() {
 		if(educationLevel==null)
@@ -48,7 +48,6 @@ public class Student {
 		return educationLevelString;
 	}
 	
-	//Getters and setters
 	public Integer getStudentId() {
 		return studentId;
 	}
@@ -59,6 +58,8 @@ public class Student {
 		return name;
 	}
 	@RequiredStringValidator(key="fieldErrors.requiredString")
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "32")
+	@RegexFieldValidator(trim=true,regex="^[a-zA-Z ]*$",key="fieldErrors.lettersAndSpaces")
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -80,13 +81,15 @@ public class Student {
 	public String getAddress() {
 		return address;
 	}
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "100")
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	@EmailValidator(key="fieldErrors.email")
 	public String getEmail() {
 		return email;
 	}
+	@EmailValidator(key="fieldErrors.email")
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "45")
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -94,6 +97,8 @@ public class Student {
 		return institutionName;
 	}
 	@RequiredStringValidator(key="fieldErrors.requiredString")
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "45")
+	@RegexFieldValidator(trim=true,regex="^[a-zA-Z ]*$",key="fieldErrors.lettersAndSpaces")
 	public void setInstitutionName(String institutionName) {
 		this.institutionName = institutionName;
 	}
@@ -104,15 +109,6 @@ public class Student {
 	@RegexFieldValidator(trim=true,regex="^[gs]\\d{2}$",message="Please choose a correct education level")
 	public void setEducationLevel(String educationLevel) {
 		this.educationLevel = educationLevel;
-	}
-	
-	public String toString() {
-		try {
-			return JSONUtil.serialize(this);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return "Error serializing the object!";
 	}
 	
 }

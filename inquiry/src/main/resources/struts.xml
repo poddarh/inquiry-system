@@ -41,42 +41,42 @@
 		</action>
 
 		<!-- Inquiry -->
-		<action name="AddInquiry" class="controller.officer.addInquiry">
+		<action name="AddInquiry" class="controller.addInquiry">
 			<result>add-inquiry.jsp</result>
 			<result name="input">add-inquiry.jsp</result>
 		</action>
-		<action name="GetInquiry" class="controller.officer.getInquiry">
+		<action name="GetInquiry" class="controller.getInquiry">
 			<result>view-inquiry.jsp</result>
 			<result name="input">view-inquiry.jsp</result>
 		</action>
-		<action name="SearchInquiries" class="controller.officer.searchInquiries">
+		<action name="SearchInquiries" class="controller.searchInquiries">
 			<result>search-inquiries.jsp</result>
 			<result name="input">search-inquiries.jsp</result>
 		</action>
-		<action name="ListFreshInquiries" class="controller.officer.listFreshInquiries">
+		<action name="ListFreshInquiries" class="controller.listFreshInquiries">
 			<result>list-fresh-inquiries.jsp</result>
 		</action>
-		<action name="CloseInquiry" class="controller.officer.closeInquiry">
+		<action name="CloseInquiry" class="controller.closeInquiry">
 			<result type="redirectAction">GetInquiry.action?inquiryId=${inquiryId}</result>
 		</action>
 
 		<!-- Course -->
-		<action name="AddCourse" class="controller.officer.addCourse">
+		<action name="AddCourse" class="controller.addCourse">
 			<result>manage-courses.jsp</result>
 			<result name="input">manage-courses.jsp</result>
 		</action>
-		<action name="RemoveCourse" class="controller.officer.removeCourse">
+		<action name="RemoveCourse" class="controller.removeCourse">
 			<result>manage-courses.jsp</result>
 		</action>
 
 		<!-- List Follow ups -->
-		<action name="AddFollowup" class="controller.officer.addFollowup">
+		<action name="AddFollowup" class="controller.addFollowup">
 			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}
 			</result>
 			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}
 			</result>
 		</action>
-		<action name="ListFollowups" class="controller.officer.listFollowups">
+		<action name="ListFollowups" class="controller.listFollowups">
 			<result>list-followups.jsp</result>
 		</action>
 
@@ -113,4 +113,22 @@
 		</action>
 	</package>
 
+	<!-- Typist Package -->
+	<package name="typist" namespace="/typist" extends="custom-default">
+		<action name="Index">
+			<result>add-inquiry.jsp</result>
+		</action>
+		
+		<!-- Inquiry -->
+		<action name="AddInquiry" class="controller.addInquiry">
+			<result>add-inquiry.jsp</result>
+			<result name="input">add-inquiry.jsp</result>
+		</action>
+		
+		<!-- User -->
+		<action name="UpdateUser" class="controller.updateUser">
+			<result>account.jsp</result>
+			<result name="input">account.jsp</result>
+		</action>
+	</package>
 </struts>

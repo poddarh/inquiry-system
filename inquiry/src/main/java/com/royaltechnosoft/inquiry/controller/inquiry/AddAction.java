@@ -1,4 +1,4 @@
-package com.royaltechnosoft.inquiry.controller.officer.inquiry;
+package com.royaltechnosoft.inquiry.controller.inquiry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,41 +10,45 @@ import com.royaltechnosoft.inquiry.model.Inquiry;
 import com.royaltechnosoft.inquiry.model.Student;
 import com.royaltechnosoft.inquiry.service.InquiryService;
 
-public class AddAction extends ControllerSupport{
-	@Autowired private InquiryService inquiryService;
+public class AddAction extends ControllerSupport {
+	@Autowired
+	private InquiryService inquiryService;
 	private Inquiry inquiry;
 	private Student student;
 	private Integer courseId;
-	
+
 	public String execute() {
 		inquiry.setStudent(student);
 		inquiryService.saveNew(inquiry);
-		inquiry=null;
-		student=null;
-		courseId=null;
-		addActionMessage((getActionProperty("successMsg")));
+
+		// Reset values of the inputs
+		inquiry = null;
+		student = null;
+		courseId = null;
+
+		addActionMessage("Successfully added!");
 		return SUCCESS;
 	}
-	
-	// Auto generated setters and getters
+
+	// Getters and setters
 	public Inquiry getInquiry() {
 		return inquiry;
 	}
-	
+
 	@VisitorFieldValidator
 	public void setInquiry(Inquiry inquiry) {
 		this.inquiry = inquiry;
 	}
-	
-	@RequiredFieldValidator(key="fieldErrors.required")
+
+	@RequiredFieldValidator(key = "fieldErrors.required")
 	public void setCourseId(Integer courseId) {
-		this.courseId=courseId;
-		if(inquiry==null)
+		this.courseId = courseId;
+		if (inquiry == null)
 			inquiry = new Inquiry();
 		inquiry.setCourse(new Course());
 		inquiry.getCourse().setCourseId(courseId);
 	}
-	
+
 	public Integer getCourseId() {
 		return courseId;
 	}

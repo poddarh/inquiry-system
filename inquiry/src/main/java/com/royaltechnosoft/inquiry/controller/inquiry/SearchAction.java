@@ -1,4 +1,4 @@
-package com.royaltechnosoft.inquiry.controller.officer.inquiry;
+package com.royaltechnosoft.inquiry.controller.inquiry;
 
 import java.util.Date;
 import java.util.List;
@@ -9,25 +9,31 @@ import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.model.Inquiry;
 import com.royaltechnosoft.inquiry.service.InquiryService;
 
-public class SearchAction extends ControllerSupport{
-	@Autowired private InquiryService inquiryService;
+public class SearchAction extends ControllerSupport {
+	@Autowired
+	private InquiryService inquiryService;
 	private List<Inquiry> inquiries;
-	private int page;
+	private int page = 1;
 	private int totalPages;
 	private String name;
 	private Date newerThan;
 	private Date olderThan;
 	private Integer courseId;
 	private Character status;
-	
+
 	public String execute() {
-		page = page==0 ? 1 : page;
-		inquiries = inquiryService.search(name, newerThan, olderThan, courseId, status, page);
-		totalPages = inquiryService.countPages(name, newerThan, olderThan, courseId, status);
+		// List results from a search for an inquiries using the following parameters
+		inquiries = inquiryService.search(name, newerThan, olderThan, courseId,
+				status, page);
+		
+		// Maximum number of pages for a search for inquiries using the following parameters
+		totalPages = inquiryService.countPages(name, newerThan, olderThan,
+				courseId, status);
+		
 		return SUCCESS;
 	}
 	
-	
+	// Getters and setters
 	public List<Inquiry> getInquiries() {
 		return inquiries;
 	}
@@ -91,8 +97,5 @@ public class SearchAction extends ControllerSupport{
 	public void setStatus(Character status) {
 		this.status = status;
 	}
-	
+
 }
-
-
-

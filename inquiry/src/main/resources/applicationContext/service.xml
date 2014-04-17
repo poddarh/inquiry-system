@@ -10,7 +10,9 @@
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
 	<!-- Service Bean Starts -->
-		<bean id="userService" class="com.royaltechnosoft.inquiry.service.impl.UserServiceImpl" autowire="byName"/>
+		<bean id="userService" class="com.royaltechnosoft.inquiry.service.impl.UserServiceImpl" autowire="byName">
+			<property name="appURL" value="${appURL}"/>
+		</bean>
 		<bean id="courseService" class="com.royaltechnosoft.inquiry.service.impl.CourseServiceImpl" autowire="byName"/>
 		<bean id="inquiryService" class="com.royaltechnosoft.inquiry.service.impl.InquiryServiceImpl" autowire="byName"/>
 		<bean id="followupService" class="com.royaltechnosoft.inquiry.service.impl.FollowupServiceImpl" autowire="byName"/>

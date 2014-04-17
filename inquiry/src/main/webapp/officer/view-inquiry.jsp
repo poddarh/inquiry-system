@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <s:include value="/template/header.jsp">
-	<s:param name="title" value="inquiry.student.name"/>
+	<s:param name="title" value="View Inquiry"/>
 </s:include>
 
 
@@ -63,7 +63,7 @@
         <td width="300px"><s:property value="inquiry.student.institutionName"/></td>
     </tr>
     <tr>
-        <td style="text-align:right">Grade/Semester:</td>
+        <td style="text-align:right">Education Level:</td>
         <td><s:property value="inquiry.student.educationLevelString"/></td>
     </tr>
 </table>
@@ -80,7 +80,14 @@
     </tr>
     <tr>
         <td style="text-align:right">Preferred Timings:</td>
-        <td><s:property value="inquiry.preferedTiming"/></td>
+        <td><s:property value="inquiry.preferredTiming"/></td>
+    </tr>
+    <tr>
+    	<td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="text-align:right">Inquiry Status:</td>
+        <td><s:property value="inquiry.statusString"/></td>
     </tr>
     <tr>
         <td style="text-align:right">References:</td>

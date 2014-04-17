@@ -5,7 +5,7 @@ import java.util.List;
 public interface DAO<T> {
 	static byte ASCENDING = 1;
 	static byte DESCENDING = 2;
-	static int LIMIT_PER_PAGE = 15;
+	static int LIMIT_PER_PAGE = 10;
 	
 	List<T> find(T model);
 	List<T> find(T model, String sortColumn, Byte direction);

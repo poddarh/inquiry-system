@@ -6,35 +6,37 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.apache.struts2.json.JSONException;
-import org.apache.struts2.json.JSONUtil;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 @Entity
 @Table(name = "followups")
 public class Followup implements Model, Comparable<Followup> {
 
-	@Id
-	@GeneratedValue
+	@Id	@GeneratedValue
 	private Integer followupId;
 	@Column(nullable = false)
 	private Date time;
-	@Column(length = 200, nullable = false)
+	@Column(length = 100, nullable = false)
 	private String remark;
 	@Column(nullable = false)
 	private Date nextScheduledDate;
 	@Column(nullable = false)
 	private Boolean isNextPending;
-	@ManyToOne
+	@ManyToOne @JoinColumn(name="inquiryId")
 	private Inquiry inquiry;
 	
-	// Setters and getters
+	// Compares the objects based on time field. Used by java.util.Collections.sort()
+	public int compareTo(Followup o) {
+		return -time.compareTo(o.getTime());
+	}
+	
+	// Getters and setters
 	public Boolean getIsNextPending() {
 		return isNextPending;
 	}
@@ -51,7 +53,6 @@ public class Followup implements Model, Comparable<Followup> {
 		this.followupId = followupId;
 	}
 	
-	@Transient
 	public Integer getInquiryId() {
 		if(inquiry!=null)
 			return inquiry.getInquiryId();
@@ -78,6 +79,7 @@ public class Followup implements Model, Comparable<Followup> {
 	}
 
 	@RequiredStringValidator(key="fieldErrors.requiredString")
+	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "100")
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
@@ -97,18 +99,5 @@ public class Followup implements Model, Comparable<Followup> {
 
 	public void setInquiry(Inquiry inquiry) {
 		this.inquiry = inquiry;
-	}
-	
-	public String toString() {
-		try {
-			return JSONUtil.serialize(this);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return "Error serializing the object!";
-	}
-
-	public int compareTo(Followup o) {
-		return -time.compareTo(o.getTime());
 	}
 }

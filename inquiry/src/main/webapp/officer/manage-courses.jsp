@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="populate" uri="/populate" %>
 <s:include value="/template/header.jsp">
-	<s:param name="title">Homepage</s:param>
+	<s:param name="title">Manage Courses</s:param>
 </s:include>
 
 <script>
@@ -14,11 +14,10 @@
 </script>
 
 <populate:courses/>
-<s:if test="hasActionMessages()">
-   <s:actionmessage/>
-</s:if>
-<s:form action="AddCourse" theme="simple">
 <h3>Manage Courses</h3>
+<s:actionmessage/>
+<s:actionerror/>
+<s:form action="AddCourse" theme="simple">
   <table border="0" cellspacing="0" cellpadding="5" class="table">
   <tr class="tableHeading">
     <th><s:textfield key="courseName"/></th>

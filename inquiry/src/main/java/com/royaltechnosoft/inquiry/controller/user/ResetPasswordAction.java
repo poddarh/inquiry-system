@@ -13,6 +13,7 @@ public class ResetPasswordAction extends ControllerSupport implements ModelDrive
 	private PasswordResetRequest passwordRequest;
 	
 	public String execute() {
+		// Checks if the request is valid and resets and emails the password if valid, otherwise, returns false
 		if(userService.resetPassword(passwordRequest)){
 			addActionMessage("Your new password has been sent to your registered email.");
 			return SUCCESS;
@@ -22,6 +23,7 @@ public class ResetPasswordAction extends ControllerSupport implements ModelDrive
 		}
 	}
 	
+	// Getters and setters
 	public PasswordResetRequest getModel() {
 		return passwordRequest = new PasswordResetRequest();
 	}
