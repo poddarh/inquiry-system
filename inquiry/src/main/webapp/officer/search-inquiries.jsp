@@ -77,7 +77,7 @@
       </tr>
       <tr>
         <td class="formLabel">Status</td>
-        <td><s:select list="#{'f':'Fresh','fo':'Open','c':'Closed'}" name="status" emptyOption="true" /></td>
+        <td><s:select list="#{'f':'Fresh','o':'Open','c':'Closed'}" name="status" emptyOption="true" /></td>
       </tr>
       <tr>
         <td class="formLabel">&nbsp;</td>
