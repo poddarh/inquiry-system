@@ -6,7 +6,7 @@ import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.model.Inquiry;
 import com.royaltechnosoft.inquiry.service.InquiryService;
 
-public class GetAction extends ControllerSupport {
+public class ViewAction extends ControllerSupport {
 	@Autowired
 	private InquiryService inquiryService;
 	private Inquiry inquiry;

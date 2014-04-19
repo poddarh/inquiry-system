@@ -9,7 +9,7 @@
 
 <script>
   $(function() {
-    $( "#nextScheduledDate" ).datepicker({
+    $( "#scheduledFollowupDate" ).datepicker({
       defaultDate: 1,
 	  minDate:0,
       numberOfMonths: 1,
@@ -85,6 +85,12 @@
     <tr>
     	<td colspan="2">&nbsp;</td>
     </tr>
+	<s:if test="%{inquiry.status=='o'}">
+	    <tr>
+	        <td style="text-align:right">Next follow-up scheduled on:</td>
+	        <td><s:date name="inquiry.scheduledFollowupDate" format="MMMM dd, yyyy" /></td>
+	    </tr>
+    </s:if>
     <tr>
         <td style="text-align:right">Inquiry Status:</td>
         <td><s:property value="inquiry.statusString"/></td>
@@ -107,7 +113,7 @@
 	<s:hidden name="inquiryId" value='%{inquiry.inquiryId}' />
 	<s:hidden name="inquiryStatus" value='%{inquiry.status}' />
 	<label for="remark">Remark: </label><s:textfield name="remark" size="50" />
-	<label for="nextScheduledDate">Call again on: </label><s:textfield name="nextScheduledDate" id="nextScheduledDate" size="10" />
+	<label for="scheduledFollowupDate">Call again on: </label><s:textfield name="scheduledFollowupDate" id="scheduledFollowupDate" size="10" />
 	<s:submit value="Add" />
 	</s:form>
 </s:if>
@@ -117,13 +123,11 @@
   <tr class="tableHeading">
     <th scope="col">Date &amp; Time</th>
     <th scope="col">Remark</th>
-    <th scope="col">Scheduled Call</th>
   </tr>
   <s:iterator value="inquiry.followups" var="followup">
 	  <tr>
 	    <td><s:date name="#followup.time" format="MMM dd, yyyy h:mm a" /></td>
 	    <td><s:property value="#followup.remark"/></td>
-	    <td><s:date name="#followup.nextScheduledDate" format="MMM dd, yyyy" /></td>
 	  </tr>
   </s:iterator>
 </table>

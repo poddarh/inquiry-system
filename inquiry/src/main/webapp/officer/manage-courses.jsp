@@ -18,7 +18,7 @@
 <s:actionmessage/>
 <s:actionerror/>
 <s:form action="AddCourse" theme="simple">
-  <table border="0" cellspacing="0" cellpadding="5" class="table">
+  <table border="0" cellspacing="0" cellpadding="5" class="table" style="width:auto;">
   <tr class="tableHeading">
     <th><s:textfield key="courseName"/></th>
     <th><s:submit value="Add"/></th>

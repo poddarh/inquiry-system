@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -24,11 +25,7 @@ public class Followup implements Model, Comparable<Followup> {
 	private Date time;
 	@Column(length = 100, nullable = false)
 	private String remark;
-	@Column(nullable = false)
-	private Date nextScheduledDate;
-	@Column(nullable = false)
-	private Boolean isNextPending;
-	@ManyToOne @JoinColumn(name="inquiryId")
+	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="inquiryId")
 	private Inquiry inquiry;
 	
 	// Compares the objects based on time field. Used by java.util.Collections.sort()
@@ -37,14 +34,6 @@ public class Followup implements Model, Comparable<Followup> {
 	}
 	
 	// Getters and setters
-	public Boolean getIsNextPending() {
-		return isNextPending;
-	}
-	
-	public void setIsNextPending(Boolean isNextPending) {
-		this.isNextPending = isNextPending;
-	}
-
 	public Integer getFollowupId() {
 		return followupId;
 	}
@@ -82,15 +71,6 @@ public class Followup implements Model, Comparable<Followup> {
 	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "100")
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	public Date getNextScheduledDate() {
-		return nextScheduledDate;
-	}
-
-	@RequiredFieldValidator(key="fieldErrors.required")
-	public void setNextScheduledDate(Date nextScheduledDate) {
-		this.nextScheduledDate = nextScheduledDate;
 	}
 
 	public Inquiry getInquiry() {

@@ -12,4 +12,6 @@ public interface InquiryDAO extends DAO<Inquiry> {
 			Integer courseId, Character status);
 	public Inquiry findOneWithFollowups(Inquiry model);
 	public Inquiry findOneWithFollowups(Integer inquiryId);
+	List<Inquiry> listScheduledBeforeTime(Date time, int page);
+	int countPageScheduledBeforeTime(Date time);
 }

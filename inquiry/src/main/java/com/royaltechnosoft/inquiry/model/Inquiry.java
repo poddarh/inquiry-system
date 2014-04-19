@@ -57,6 +57,10 @@ public class Inquiry implements Model {
 	@OneToMany(mappedBy="inquiry",orphanRemoval=true)
 	private List<Followup> followups;
 	
+	@Column
+	private Date scheduledFollowupDate;
+	
+	
 	public String getStatusString(){
 		if(status!=null){
 			switch (status) {
@@ -75,6 +79,14 @@ public class Inquiry implements Model {
 	}
 	
 	// Getters and setters
+	public Date getScheduledFollowupDate() {
+		return scheduledFollowupDate;
+	}
+	
+	public void setScheduledFollowupDate(Date scheduledFollowupDate) {
+		this.scheduledFollowupDate = scheduledFollowupDate;
+	}
+	
 	public List<Followup> getFollowups() {
 		return followups;
 	}

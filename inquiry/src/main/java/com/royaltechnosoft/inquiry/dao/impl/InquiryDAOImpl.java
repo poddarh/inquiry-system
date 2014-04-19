@@ -42,7 +42,6 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		criteria.setFirstResult((page-1)*LIMIT_PER_PAGE);
 		criteria.setMaxResults(LIMIT_PER_PAGE);
 		
-		@SuppressWarnings("unchecked")
 		List<Inquiry> inquiries = criteria.list();
 		
 		closeSession(session);
@@ -93,5 +92,44 @@ public class InquiryDAOImpl extends DAOSupport<Inquiry> implements InquiryDAO{
 		closeSession(session);
 		return inquiry;
 	}
+	
+	// Returns a paged list of all the follow-ups that has the nextScheduled
+	// date before the specified date
+	public List<Inquiry> listScheduledBeforeTime(Date time, int page) {
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(Inquiry.class);
+		
+		// Where scheduledFollowupDate is less than or equal to the time specified
+		criteria.add(Restrictions.le("scheduledFollowupDate", time));
+		// Where the inquiry status is open
+		criteria.add(Restrictions.eq("status", 'o'));
+		// Order it with the oldest first 
+		criteria.addOrder(Order.asc("scheduledFollowupDate"));
+		
+		// Paginate the response
+		criteria.setFirstResult((page - 1) * LIMIT_PER_PAGE);
+		criteria.setMaxResults(LIMIT_PER_PAGE);
+		
+		List<Inquiry> inquiries = criteria.list();
+		closeSession(session);
+		return inquiries;
+	}
 
+	// Returns a count of paged lists of all the open inquiries that has the
+	// scheduledFollowupDate date before the specified date
+	public int countPageScheduledBeforeTime(Date time) {
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(Inquiry.class);
+		// Return only row count
+		criteria.setProjection(Projections.rowCount());
+		// Where scheduledFollowupDate is less than or equal to the time specified
+		criteria.add(Restrictions.le("scheduledFollowupDate", time));
+		// Where the inquiry status is open
+		criteria.add(Restrictions.eq("status", 'o'));
+		
+		int pages = getPageCount((Long) criteria.uniqueResult());
+		closeSession(session);
+		return pages;
+	}
+	
 }

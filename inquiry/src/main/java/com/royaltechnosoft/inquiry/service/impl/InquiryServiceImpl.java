@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.royaltechnosoft.inquiry.dao.FollowupDAO;
 import com.royaltechnosoft.inquiry.dao.InquiryDAO;
-import com.royaltechnosoft.inquiry.model.Followup;
 import com.royaltechnosoft.inquiry.model.Inquiry;
 import com.royaltechnosoft.inquiry.service.InquiryService;
 
@@ -16,8 +15,6 @@ public class InquiryServiceImpl extends ServiceSupport implements
 		InquiryService {
 	@Autowired
 	private InquiryDAO inquiryDAO;
-	@Autowired
-	private FollowupDAO followupDAO;
 
 	// Saves a new inquiry
 	public void saveNew(Inquiry inquiry) {
@@ -46,7 +43,7 @@ public class InquiryServiceImpl extends ServiceSupport implements
 
 	// Counts the database for the inquiries with the matching criteria and
 	// returns the maximum number of pages
-	public int countPages(String name, Date newerThan, Date olderThan,
+	public int countSearchPages(String name, Date newerThan, Date olderThan,
 			Integer courseId, Character status) {
 		return inquiryDAO.countPage(name, newerThan, olderThan, courseId,
 				status);
@@ -64,31 +61,34 @@ public class InquiryServiceImpl extends ServiceSupport implements
 
 	// Returns maximum number of pages for all the inquiries with the status as
 	// fresh
-	public int getFreshPages() {
+	public int countFreshPages() {
 		Inquiry inquiry = new Inquiry();
 		inquiry.setStatus(Inquiry.STATUS_FRESH);
 		return inquiryDAO.countPage(inquiry);
 	}
 
-	// Changes the status of an inquiry with the given inquiryId to close. This
-	// method also changes the value of isNextPending of all the follow-ups
-	// related to this inquiry to false.
+	// Changes the status of an inquiry with the given inquiryId to close.
 	public void close(Integer inquiryId) {
-		Followup queryModel = new Followup();
-		queryModel.setInquiryId(inquiryId);
-		queryModel.setIsNextPending(true);
-
-		Followup updateModel = new Followup();
-		updateModel.setIsNextPending(false);
-
-		// Update all the objects that matches to this query model with all the
-		// non-null fields from the update model
-		followupDAO.update(queryModel, updateModel);
-		
 		Inquiry inquiry = new Inquiry();
 		inquiry.setStatus(Inquiry.STATUS_CLOSED);
 		inquiryDAO.update(inquiryId, inquiry);
-
 	}
-
+	
+	public List<Inquiry> listScheduled(int page) {
+		return inquiryDAO.listScheduledBeforeTime(new Date(), page);
+	}
+	
+	public int countScheduledPages() {
+		return inquiryDAO.countPageScheduledBeforeTime(new Date());
+	}
+	
+	public void updateScheduledFollowupDate(Character inquiryStatus, int inquiryId, Date scheduledFollowupDate) {
+		Inquiry inquiry = new Inquiry();
+		if(inquiryStatus == Inquiry.STATUS_FRESH) {
+			inquiry.setStatus(Inquiry.STATUS_OPEN);
+		}
+		inquiry.setScheduledFollowupDate(scheduledFollowupDate);
+		inquiryDAO.update(inquiryId, inquiry);
+	}
+	
 }

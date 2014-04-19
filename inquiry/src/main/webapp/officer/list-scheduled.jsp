@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 function openInquiry(inquiryId){
-	window.open("GetInquiry.action?inquiryId="+inquiryId,"_self");
+	window.open("ViewInquiry.action?inquiryId="+inquiryId,"_self");
 }
 </script>
 
@@ -24,7 +24,7 @@ function openInquiry(inquiryId){
 				<s:property value="#status.count" />
 			</s:if>
 			<s:else>
-				<s:a href='ListFollowups?page=%{#status.count}'>
+				<s:a href='ListScheduled?page=%{#status.count}'>
 					<s:property value="#status.count" />
 				</s:a>
 			</s:else>
@@ -38,13 +38,13 @@ function openInquiry(inquiryId){
     <th scope="col">Inquiry Date</th>
     <th scope="col">Follow up scheduled on</th>
   </tr>
-<s:iterator value="followups" var="followup">
+<s:iterator value="inquiries" var="inquiry">
 
-  <tr class="tableRow" onclick='openInquiry(<s:property value="#followup.inquiryId" />);'>
-    <td><s:property value="#followup.inquiry.student.name" /></td>
-    <td><s:property value="#followup.inquiry.course.name" /></td>
-    <td><s:date name="#followup.inquiry.dateCreated" format="MMM dd, yyyy" /></td>
-    <td><s:date name="#followup.nextScheduledDate" format="MMM dd, yyyy" /></td>
+  <tr class="tableRow" onclick='openInquiry(<s:property value="#inquiry.inquiryId" />);'>
+    <td><s:property value="#inquiry.student.name" /></td>
+    <td><s:property value="#inquiry.course.name" /></td>
+    <td><s:date name="#inquiry.dateCreated" format="MMM dd, yyyy" /></td>
+    <td><s:date name="#inquiry.scheduledFollowupDate" format="MMM dd, yyyy" /></td>
   </tr>
 
 </s:iterator>

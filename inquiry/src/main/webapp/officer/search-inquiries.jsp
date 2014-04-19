@@ -29,7 +29,7 @@
     });
   });
   function openInquiry(inquiryId){
-		window.open("GetInquiry.action?inquiryId="+inquiryId,"_self");
+		window.open("ViewInquiry.action?inquiryId="+inquiryId,"_self");
   }
   function openPage(page){
 	  $("#openPageForm_page").val(page);

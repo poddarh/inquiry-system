@@ -34,7 +34,7 @@
 					<td class="sidebar1" valign="top">
 						<ul class="nav">
 							<s:if test="%{#session.user.role=='officer'}">
-								<li><a href="/inquiry/officer/ListFollowups.action">Scheduled
+								<li><a href="/inquiry/officer/ListScheduled.action">Scheduled
 										Followups</a></li>
 								<li><a href="#">Inquiry</a></li>
 								<li><a href="/inquiry/officer/add-inquiry.jsp">-&gt;Create

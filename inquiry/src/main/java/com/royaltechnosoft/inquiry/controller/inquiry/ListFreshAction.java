@@ -20,7 +20,7 @@ public class ListFreshAction extends ControllerSupport {
 		inquiries = inquiryService.listFresh(page);
 		
 		// Maximum number of pages for inquiries with the status fresh
-		totalPages = inquiryService.getFreshPages();
+		totalPages = inquiryService.countFreshPages();
 		
 		return SUCCESS;
 	}

@@ -37,7 +37,7 @@
 	<package name="officer" namespace="/officer" extends="custom-default">
 
 		<action name="Index">
-			<result type="redirectAction">ListFollowups</result>
+			<result type="redirectAction">ListScheduled</result>
 		</action>
 
 		<!-- Inquiry -->
@@ -45,7 +45,7 @@
 			<result>add-inquiry.jsp</result>
 			<result name="input">add-inquiry.jsp</result>
 		</action>
-		<action name="GetInquiry" class="controller.getInquiry">
+		<action name="ViewInquiry" class="controller.viewInquiry">
 			<result>view-inquiry.jsp</result>
 			<result name="input">view-inquiry.jsp</result>
 		</action>
@@ -57,7 +57,10 @@
 			<result>list-fresh-inquiries.jsp</result>
 		</action>
 		<action name="CloseInquiry" class="controller.closeInquiry">
-			<result type="redirectAction">GetInquiry.action?inquiryId=${inquiryId}</result>
+			<result type="redirectAction">ViewInquiry.action?inquiryId=${inquiryId}</result>
+		</action>
+		<action name="ListScheduled" class="controller.listScheduledInquiries">
+			<result>list-scheduled.jsp</result>
 		</action>
 
 		<!-- Course -->
@@ -71,13 +74,10 @@
 
 		<!-- List Follow ups -->
 		<action name="AddFollowup" class="controller.addFollowup">
-			<result type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}
+			<result type="redirectAction">ViewInquiry.action?inquiryId=${followup.inquiryId}
 			</result>
-			<result name="input" type="redirectAction">GetInquiry.action?inquiryId=${followup.inquiryId}
+			<result name="input" type="redirectAction">ViewInquiry.action?inquiryId=${followup.inquiryId}
 			</result>
-		</action>
-		<action name="ListFollowups" class="controller.listFollowups">
-			<result>list-followups.jsp</result>
 		</action>
 
 		<!-- User -->

@@ -27,7 +27,7 @@ public class SearchAction extends ControllerSupport {
 				status, page);
 		
 		// Maximum number of pages for a search for inquiries using the following parameters
-		totalPages = inquiryService.countPages(name, newerThan, olderThan,
+		totalPages = inquiryService.countSearchPages(name, newerThan, olderThan,
 				courseId, status);
 		
 		return SUCCESS;

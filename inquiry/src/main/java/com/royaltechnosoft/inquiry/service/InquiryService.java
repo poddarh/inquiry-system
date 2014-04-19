@@ -10,9 +10,13 @@ public interface InquiryService extends Service {
 	Inquiry getInquiry(Integer inquiryId);
 	List<Inquiry> search(String name, Date newerThan, Date olderThan,
 			Integer courseId, Character status, int page);
-	int countPages(String name, Date newerThan, Date olderThan,
+	int countSearchPages(String name, Date newerThan, Date olderThan,
 			Integer courseId, Character status);
 	List<Inquiry> listFresh(int page);
-	int getFreshPages();
+	int countFreshPages();
 	void close(Integer inquiryId);
+	List<Inquiry> listScheduled(int page);
+	int countScheduledPages();
+	void updateScheduledFollowupDate(Character inquiryStatus, int inquiryId,
+			Date scheduledFollowupDate);
 }

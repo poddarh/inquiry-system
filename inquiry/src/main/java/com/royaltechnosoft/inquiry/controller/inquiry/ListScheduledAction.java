@@ -1,34 +1,35 @@
-package com.royaltechnosoft.inquiry.controller.followup;
+package com.royaltechnosoft.inquiry.controller.inquiry;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.royaltechnosoft.inquiry.controller.ControllerSupport;
-import com.royaltechnosoft.inquiry.model.Followup;
-import com.royaltechnosoft.inquiry.service.FollowupService;
+import com.royaltechnosoft.inquiry.model.Inquiry;
+import com.royaltechnosoft.inquiry.service.InquiryService;
 
-public class ListAction extends ControllerSupport {
+public class ListScheduledAction extends ControllerSupport {
 	@Autowired
-	private FollowupService followupService;
-	private List<Followup> followups;
+	private InquiryService inquiryService;
+	private List<Inquiry> inquiries;
 	private int page = 1;
 	private int totalPages;
 
 	public String execute() throws Exception {
 		// Get a page of followups that are scheduled for today or earlier and has not been done
-		followups = followupService.list(page);
+		inquiries = inquiryService.listScheduled(page);
 		// Get maximum number of pages required for the complete list to be displayed
-		totalPages = followupService.getTotalPageNumber();
+		totalPages = inquiryService.countScheduledPages();
 		return SUCCESS;
 	}
 
-	public List<Followup> getFollowups() {
-		return followups;
+
+	public List<Inquiry> getInquiries() {
+		return inquiries;
 	}
 
-	public void setFollowups(List<Followup> followups) {
-		this.followups = followups;
+	public void setInquiries(List<Inquiry> inquiries) {
+		this.inquiries = inquiries;
 	}
 
 	public int getPage() {
