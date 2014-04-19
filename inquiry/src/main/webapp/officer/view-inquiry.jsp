@@ -109,6 +109,12 @@
 <br/>
 <h4>Followup Details:</h4>
 <s:if test="%{inquiry.status!='c'}">
+	<span style="color:red">
+	<s:iterator value="fieldErrors.remark">
+		<s:property /></br>
+	</s:iterator>
+	</span>
+
 	<s:form theme="simple" action="AddFollowup">
 	<s:hidden name="inquiryId" value='%{inquiry.inquiryId}' />
 	<s:hidden name="inquiryStatus" value='%{inquiry.status}' />
@@ -119,6 +125,7 @@
 </s:if>
 <br/>
 <s:if test="%{!inquiry.followups.isEmpty()}">
+
 <table border="0" cellspacing="0" cellpadding="5" class="table">
   <tr class="tableHeading">
     <th scope="col">Date &amp; Time</th>

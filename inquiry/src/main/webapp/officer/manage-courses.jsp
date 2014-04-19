@@ -17,6 +17,11 @@
 <h3>Manage Courses</h3>
 <s:actionmessage/>
 <s:actionerror/>
+<span style="color:red">
+<s:iterator value="fieldErrors.courseName">
+	<s:property /></br>
+</s:iterator>
+</span>
 <s:form action="AddCourse" theme="simple">
   <table border="0" cellspacing="0" cellpadding="5" class="table" style="width:auto;">
   <tr class="tableHeading">
@@ -32,7 +37,6 @@
   </s:iterator>
 </table>
 </s:form>
-
 
 
 
