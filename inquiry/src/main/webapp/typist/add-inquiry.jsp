@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="populate" uri="/populate"%>
 <s:include value="/template/header.jsp">
-	<s:param name="title" value="Add Inquiry"/>
+	<s:param name="title">Add Inquiry</s:param>
 </s:include>
 
 <script>
@@ -22,6 +22,7 @@ $(function() {
 <s:actionerror/>
 <s:actionmessage/>
 <s:form action="AddInquiry">
+<s:textfield key="inquiry.dateCreated" label="Date" />
 <s:textfield key="student.name" label="Name"/>
 <s:textfield key="student.mobile" label="Mobile"/>
 <s:textfield key="student.telephone" label="Tel. No."/>
@@ -34,7 +35,6 @@ $(function() {
 <s:textfield key="inquiry.preferredTiming" label="Preferable Timings"/>
 <s:textfield key="inquiry.referredBy" label="Referred By"/>
 <s:textfield key="inquiry.inquiryHandledBy" label="Inquiry Heandled by"/>
-<s:textfield key="inquiry.dateCreated" label="Date" />
 <s:submit/>
 </s:form>
 

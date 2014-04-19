@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <s:include value="/template/header.jsp">
-	<s:param name="title" value="View Inquiry"/>
+	<s:param name="title">View Inquiry</s:param>
 </s:include>
 
 

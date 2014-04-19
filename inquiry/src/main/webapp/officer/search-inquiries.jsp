@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="populate" uri="/populate"%>
 <s:include value="/template/header.jsp">
-	<s:param name="title" value="Search Inquiries"/>
+	<s:param name="title">Search Inquiries</s:param>
 </s:include>
 
 <script>

@@ -17,13 +17,13 @@ public class User implements Model {
 	@Id
 	@GeneratedValue
 	private Integer userId;
-	@Column(nullable = false, length = 45)
+	@Column(nullable = false, length = 32)
 	private String name;
-	@Column(nullable = false, length = 60)
-	private String email;
 	@Column(nullable = false, length = 45)
+	private String email;
+	@Column(nullable = false, length = 32)
 	private String password;
-	@Column(nullable = false, length = 18)
+	@Column(nullable = false, length = 8)
 	private String role;
 
 	// Getters and setters
