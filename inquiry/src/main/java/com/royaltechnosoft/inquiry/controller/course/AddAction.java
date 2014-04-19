@@ -2,7 +2,6 @@ package com.royaltechnosoft.inquiry.controller.course;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.royaltechnosoft.inquiry.controller.ControllerSupport;
@@ -34,7 +33,6 @@ public class AddAction extends ControllerSupport {
 	// Setters and getters
 	@RequiredStringValidator(key = "fieldErrors.requiredString", trim = true)
 	@StringLengthFieldValidator(key = "fieldErrors.stringMaxLength", trim = true, maxLength = "32")
-	@RegexFieldValidator(trim=true,regex="^[a-zA-Z ]*$",key="fieldErrors.lettersAndSpaces")
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
