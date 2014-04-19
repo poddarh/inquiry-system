@@ -46,5 +46,5 @@ public class ListAction extends ControllerSupport {
 	public void setTotalPages(int totalPages) {
 		this.totalPages = totalPages;
 	}
-	
+
 }

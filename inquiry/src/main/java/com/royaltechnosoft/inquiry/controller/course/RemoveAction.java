@@ -6,6 +6,7 @@ import com.royaltechnosoft.inquiry.controller.ControllerSupport;
 import com.royaltechnosoft.inquiry.service.CourseService;
 
 public class RemoveAction extends ControllerSupport {
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private CourseService courseService;
 	private Integer courseId;

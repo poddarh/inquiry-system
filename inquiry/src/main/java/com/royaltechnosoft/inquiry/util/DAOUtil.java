@@ -84,7 +84,7 @@ public class DAOUtil {
 
 		// Check all the field value for the model object for non-null fields
 		for (String fieldName : fieldNames) {
-			
+
 			Object value = null;
 			// Get the value stored in a field.
 			try {
@@ -93,34 +93,37 @@ public class DAOUtil {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			// Check if the field is an instance of String and its value is not "" or null. If it is not, then add it to the map.
+
+			// Check if the field is an instance of String and its value is not
+			// "" or null. If it is not, then add it to the map.
 			if (value instanceof String) {
 				if (((String) value).trim().length() != 0) {
 					nonNullFields.put(fieldName, value);
 				}
 			}
-			
-			// Check if the field value is not null. If it is not, then add it to the map.
+
+			// Check if the field value is not null. If it is not, then add it
+			// to the map.
 			else if (value != null)
 				nonNullFields.put(fieldName, value);
 		}
 		return nonNullFields;
 	}
-	
-	
+
 	/*
-	 * Look for all non-transient member variables in the class and put them into a static map
+	 * Look for all non-transient member variables in the class and put them
+	 * into a static map
 	 */
 	private static void findFieldsAndMethods(Class<?> type) {
 		List<String> fieldNames = new ArrayList<String>();
 		Field[] fields = type.getDeclaredFields();
 		for (Field field : fields) {
+			// Ignore all primitive types
 			if (field.getType().isPrimitive())
 				continue;
 			try {
-
 				Annotation[] annotations = field.getAnnotations();
+				// If field transient, ignore. If Id, then put in idMap also
 				for (Annotation annotation : annotations) {
 					if (annotation.annotationType() == Transient.class)
 						continue;
@@ -139,11 +142,13 @@ public class DAOUtil {
 		fieldMap.put(type, fieldNames);
 	}
 
+	// Returns the get method name for a field
 	private static String getGetMethodName(String fieldName) {
 		char begin = Character.toUpperCase(fieldName.charAt(0));
 		return "get" + begin + fieldName.substring(1);
 	}
 
+	// Returns the ID field name for a model class type
 	public static String getIdFieldName(Class<?> type) {
 		if (!idNameMap.containsKey(type))
 			findFieldsAndMethods(type);
